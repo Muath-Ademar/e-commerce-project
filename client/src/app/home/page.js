@@ -26,7 +26,7 @@ const page = () => {
                 <div className='flex justify-center gap-20 mt-20'>
                     <div className='bg-[#edbeea] w-50 h-50 mt-20'>
                         <Image
-                            src="/images/360_F_439600528_2FWTMQDiXYv6T0qolS57KSxiNbqlhDTa.png"
+                            src="/images/696334e4-db0a-4d8a-a847-27b776fd096f-removebg-preview.png"
                             alt="Image 1"
                             width={500} // You can change this based on your layout needs
                             height={500} // Optional — just for intrinsic sizing
@@ -44,16 +44,17 @@ const page = () => {
                     </div>
                     <div className='bg-[#EDCC8B] w-50 h-45 mt-25'>
                         <Image
-                            src="/images/freepik__the-style-is-candid-image-photography-with-natural__92589.png"
+                            src="/images/UltraShortLadiesFitRoyal_510x@2x.webp"
                             alt="Image 3"
                             width={500}
                             height={500}
                             className="w-full h-full object-contain"
                         />
                     </div>
+
                     <div className='bg-[#84BFE1] w-50 h-70'>
                         <Image
-                            src="/images/UltraShortLadiesFitRoyal_510x@2x.webp"
+                            src="/images/freepik__the-style-is-candid-image-photography-with-natural__92589.png"
                             alt="Image 4"
                             width={500}
                             height={500}
@@ -106,7 +107,99 @@ const page = () => {
                     </button>
                 </div>
             </div>
-                    
+            <div className="w-full border-b border-b-[#504C48]-500 my-4"></div>
+
+            {/* new arrivals section */}
+
+            <div className='h-auto mx-70 my-15'>
+                <h1 className='text-center text-black font-semibold text-3xl mb-5'>Our 2025 new arrivals</h1>
+                <p className='text-center text-gray-600 mb-8 text-base'>
+                    Discover the latest trends just dropped for the new year.
+                </p>
+                <div className='grid grid-cols-3 gap-6'>
+                    {[
+                        {
+                            src: '/images/man-posing-stairs-while-wearing-athletic-wear_23-2148773866.jpg',
+                            category: 'Performance Running Set | $79.99'
+                        },
+                        {
+                            src: '/images/vertical-shot-handsome-male-sportswear-posing-front-camera_665346-149586.jpg',
+                            category: 'ProFit Training Hoodie | $59.99'
+                        },
+                        {
+                            src: '/images/portrait-young-soccer-player.jpg',
+                            category: 'Adidas football Tracksuit | $49.99'
+                        },
+
+                    ].map((item, index) => (
+                        <div key={index} className='text-center'>
+                            <div className='h-130 w-100 overflow-hidden'>
+                                <img
+                                    src={item.src}
+                                    alt={item.category}
+                                    className='w-full h-full object-fill hover:scale-110 transition-transform duration-300'
+                                />
+                            </div>
+                            <h2 className='text-lg font-medium mt-3 text-black'>{item.category}</h2>
+                        </div>
+                    ))}
+                </div>
+                <div className='flex justify-center mt-5'>
+                    <button className='text-[#D99655] border border-[#D99655] px-6 py-2 w-48 hover:bg-[#D99655] hover:text-white transition'>
+                        View More
+                    </button>
+                </div>
+            </div>
+
+            {/*limited time offer section*/}
+            <div className='bg-[#1E1C1A] h-147 w-full '>
+                <div className='pt-16 flex items-center justify-around gap-12'>
+                    <div className=" text-white p-6 space-y-2 font-poppins">
+                        <p className="text-sm tracking-wide">1 June - 10 June 2022</p>
+
+                        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight flex items-center gap-2">
+                            LIMITED TIME OFFER
+                            <span className="text-[#D99655] text-2xl">✨</span>
+                        </h1>
+
+                        <h2 className="text-lg md:text-xl font-medium">
+                            Get 20% off on every product
+                        </h2>
+
+                        <p className="text-sm md:text-base text-gray-300">
+                            Spend minimal $100 get 30% off voucher code for your next purchase
+                        </p>
+                    </div>
+                    <button className='flex items-center gap-2 bg-[#D99655] text-white px-6 py-2 rounded-md hover:bg-[#c67d3b] transition'>
+                        SHOP NOW
+                        <ArrowRightIcon className='w-5 h-5' />
+                    </button>
+                </div>
+                <div className='flex justify-center space-x-8 mt-24 items-end'>
+                    <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center shadow-md '>
+                        <img src='/images/88a5c5aa-9b25-4fa3-a8c2-5c8dfaff8696-removebg-preview.png' alt='Shoe 1' className='h-40 object-contain' />
+                    </div>
+                    <div className='bg-[#F5F3F6] h-48 w-40 mt-10 flex items-center justify-center shadow-md '>
+                        <img src='/images/sport-jacket-clothing-removebg-preview.png' alt='Shoe 2' className='h-36 object-contain' />
+                    </div>
+                    <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center shadow-md '>
+                        <img src='/images/apoc-mabttrn20001-grm-a_1-removebg-preview.png' alt='Shoe 3' className='h-40 object-contain' />
+                    </div>
+                    <div className='bg-[#F5F3F6] h-48 w-40 mt-10 flex items-center justify-center shadow-md '>
+                        <img src='/images/71bqflNC9ZL._SS1000_.png' alt='Shoe 4' className='h-36 object-contain' />
+                    </div>
+                    <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center shadow-md '>
+                        <img src='/images/WhiteHoodie.png' alt='Shoe 5' className='h-40 object-contain' />
+                    </div>
+                    <div className='bg-[#F5F3F6] h-48 w-40 mt-10 flex items-center justify-center shadow-md '>
+                        <img src='/images/Adobe Express - file.png' alt='Shoe 6' className='h-36 object-contain' />
+                    </div>
+                </div>
+
+
+
+            </div>
+
 
         </>
     )
