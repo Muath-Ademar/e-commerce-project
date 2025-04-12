@@ -175,29 +175,43 @@ const page = () => {
                         <ArrowRightIcon className='w-5 h-5' />
                     </button>
                 </div>
-                <div className='flex justify-center space-x-8 mt-24 items-end'>
-                    <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center shadow-md '>
-                        <img src='/images/88a5c5aa-9b25-4fa3-a8c2-5c8dfaff8696-removebg-preview.png' alt='Shoe 1' className='h-40 object-contain' />
+                <div className='flex justify-center space-x-8 mt-25 items-end'>
+                    <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center transform transition duration-300 hover:rotate-6'>
+                        <Image src='/images/88a5c5aa-9b25-4fa3-a8c2-5c8dfaff8696-removebg-preview.png' alt='Shoe 1' height={200} width={200} className='object-contain' />
                     </div>
-                    <div className='bg-[#F5F3F6] h-48 w-40 mt-10 flex items-center justify-center shadow-md '>
-                        <img src='/images/sport-jacket-clothing-removebg-preview.png' alt='Shoe 2' className='h-36 object-contain' />
+                    <div className='bg-[#F5F3F6] h-48 w-40 mt-10 flex items-center justify-center transform transition duration-300 hover:rotate-6 '>
+                        <Image src='/images/sport-jacket-clothing-removebg-preview.png' alt='Shoe 2' height={200} width={200} className='object-contain' />
                     </div>
-                    <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center shadow-md '>
-                        <img src='/images/apoc-mabttrn20001-grm-a_1-removebg-preview.png' alt='Shoe 3' className='h-40 object-contain' />
+                    <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center transform transition duration-300 hover:rotate-6 '>
+                        <Image src='/images/apoc-mabttrn20001-grm-a_1-removebg-preview.png' alt='Shoe 3' height={200} width={200} className='object-contain' />
                     </div>
-                    <div className='bg-[#F5F3F6] h-48 w-40 mt-10 flex items-center justify-center shadow-md '>
-                        <img src='/images/71bqflNC9ZL._SS1000_.png' alt='Shoe 4' className='h-36 object-contain' />
+                    <div className='bg-[#F5F3F6] h-48 w-40 mt-10 flex items-center justify-center transform transition duration-300 hover:rotate-6 '>
+                        <Image src='/images/71bqflNC9ZL._SS1000_.png' alt='Shoe 4' height={200} width={200} className='object-contain' />
                     </div>
-                    <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center shadow-md '>
-                        <img src='/images/WhiteHoodie.png' alt='Shoe 5' className='h-40 object-contain' />
+                    <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center transform transition duration-300 hover:rotate-6 '>
+                        <Image src='/images/WhiteHoodie.png' alt='Shoe 5' height={200} width={200} className='object-contain' />
                     </div>
-                    <div className='bg-[#F5F3F6] h-48 w-40 mt-10 flex items-center justify-center shadow-md '>
-                        <img src='/images/Adobe Express - file.png' alt='Shoe 6' className='h-36 object-contain' />
+                    <div className='bg-[#F5F3F6] h-48 w-40 mt-10 flex items-center justify-center transform transition duration-300 hover:rotate-6 '>
+                        <Image src='/images/Adobe Express - file.png' alt='Shoe 6' height={200} width={200} className='object-contain' />
                     </div>
                 </div>
 
 
 
+            </div>
+
+            {/* visited our instagram section */}
+            <div className='mt-30'>
+                <div className='text-black flex justify-around'>
+                    <h1 className='font-extrabold tracking-tight text-3xl'>VISIT OUR INSTAGRAME</h1>
+                    <p className='underline'>@akg_fashion</p>
+                </div>
+                <div className='flex justify-center space-x-7 mt-14'>
+                    <Image src={'/images/assets_task_01jrngm0fvf3qv90kn38eddn37_img_0.webp'} alt='football boots' height={300} width={300}/>
+                    <Image src={'/images/assets_task_01jrngt03aefnr3rzxmmx075p1_img_0.webp'} alt='tracksuites' height={300} width={300}/>
+                    <Image src={'/images/assets_task_01jrnheh5netercpd60c9xenja_img_0.webp'} alt="sports hoodie" height={300} width={300}/>
+                    <Image src={'/images/assets_task_01jrnhr2srfvcrrz8rgj09r55s_img_0.webp'} alt='sports shorts' height={300} width={300}/>
+                </div>
             </div>
 
 
