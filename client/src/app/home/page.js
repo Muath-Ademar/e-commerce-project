@@ -65,12 +65,12 @@ const page = () => {
             </div>
 
             {/* Featured Collection */}
-            <div className='h-auto mx-12 my-15'>
+            <div className='h-auto mx-42 my-15'>
                 <h1 className='text-center text-black font-semibold text-3xl mb-5'>Featured Collection</h1>
                 <p className='text-center text-gray-600 mb-8 text-base'>
                     Browse through our top categories for every style and season.
                 </p>
-                <div className='grid grid-cols-4 gap-12'>
+                <div className='grid grid-cols-4'>
                     {[
                         {
                             src: '/images/1_b68e6977-de25-4e06-a361-c46195beced9.jpg',
@@ -90,7 +90,7 @@ const page = () => {
                         },
                     ].map((item, index) => (
                         <div key={index} className='text-center'>
-                            <div className='h-130 w-105 overflow-hidden'>
+                            <div className='h-120 w-95 overflow-hidden'>
                                 <img
                                     src={item.src}
                                     alt={item.category}
@@ -199,20 +199,51 @@ const page = () => {
 
 
             </div>
-
-            {/* visited our instagram section */}
+            {/* trending brands section */}
             <div className='mt-30'>
-                <div className='text-black flex justify-around'>
-                    <h1 className='font-extrabold tracking-tight text-3xl'>VISIT OUR INSTAGRAME</h1>
-                    <p className='underline'>@akg_fashion</p>
+
+                <div className='text-center'>
+                    <h1 className='text-black text-2xl md:text-4xl font-extrabold tracking-tight'>OUR TRENDING BRANDS</h1>
                 </div>
-                <div className='flex justify-center space-x-7 mt-14'>
-                    <Image src={'/images/assets_task_01jrngm0fvf3qv90kn38eddn37_img_0.webp'} alt='football boots' height={300} width={300}/>
-                    <Image src={'/images/assets_task_01jrngt03aefnr3rzxmmx075p1_img_0.webp'} alt='tracksuites' height={300} width={300}/>
-                    <Image src={'/images/assets_task_01jrnheh5netercpd60c9xenja_img_0.webp'} alt="sports hoodie" height={300} width={300}/>
-                    <Image src={'/images/assets_task_01jrnhr2srfvcrrz8rgj09r55s_img_0.webp'} alt='sports shorts' height={300} width={300}/>
+                <div className='flex justify-center gap-4 mt-9'>
+                    <div className='w-60 h-45 bg-[#F6F6F8]'><Image src='/images/nike-4-logo-png-transparent.png' alt='Shoe 1' height={200} width={200} className='object-contain mx-5' /></div>
+                    <div className='w-60 h-45 bg-[#F6F6F8]'><Image src='/images/adidas-logo.png' alt='Shoe 1' height={200} width={200} className='object-contain mx-5' /></div>
+                    <div className='w-60 h-45 bg-[#F6F6F8]'><Image src='/images/Reebok-Logo-black-white.png' alt='Shoe 1' height={200} width={200} className='object-contain mx-5' /></div>
+                    <div className='w-60 h-45 bg-[#F6F6F8] flex items-center'><Image src='/images/Puma-logo-PNG-Transparent-Background.png' alt='Shoe 1' height={200} width={200} className='object-contain mx-5' /></div>
+                    <div className='w-60 h-45 bg-[#F6F6F8]'><Image src='/images/Under-Armour-Logo.png' alt='Shoe 1' height={200} width={200} className='object-contain mx-5' /></div>
                 </div>
             </div>
+
+            {/* visited our instagram section */}
+            <div className="mt-30 bg-[#FFF0E3] pt-10">
+                <div className="text-black text-center gap-11 mr-4 mt-10">
+                    <h1 className="font-extrabold tracking-tight text-3xl">VISIT OUR INSTAGRAME</h1>
+                    <p className="underline">@akg_fashion</p>
+                </div>
+
+                <div className="flex justify-center space-x-7 mt-14">
+                    {/* Left Image (Tall + Narrow) */}
+                    <div className="relative w-[370px] h-[409px] mt-[153px]">
+                        <Image
+                            src="/images/assets_task_01jrngt03aefnr3rzxmmx075p1_img_0 1.png"
+                            alt="football boots"
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+
+                    {/* Right Image (Wide + Short) */}
+                    <div className="relative w-[770px] h-[562px]">
+                        <Image
+                            src="/images/Rectangle 22.png"
+                            alt="tracksuites"
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+                </div>
+            </div>
+
 
 
         </>
