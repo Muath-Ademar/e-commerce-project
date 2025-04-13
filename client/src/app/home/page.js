@@ -215,7 +215,7 @@ const page = () => {
             </div>
 
             {/* visited our instagram section */}
-            <div className="mt-30 bg-[#FFF0E3] pt-10">
+            <div className="mt-30 bg-[#FFF0E3] pt-10 h-210">
                 <div className="text-black text-center gap-11 mr-4 mt-10">
                     <h1 className="font-extrabold tracking-tight text-3xl">VISIT OUR INSTAGRAME</h1>
                     <p className="underline">@akg_fashion</p>
