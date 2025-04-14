@@ -6,7 +6,7 @@ const app = express()
 require('dotenv').config();
 const port = process.env.PORT
 require('./config/mongoose.config');
-app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
