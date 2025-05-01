@@ -8,8 +8,8 @@ const page = () => {
         <>
             {/* hero section */}
 
-            <div className='bg-[#FFF0E3] h-174.5 '>
-                <Navbar />
+            <div className='bg-[#FFF0E3] h-174.5 pt-[65px]'>
+                
                 <div className="text-center mt-16 px-4">
                     <h1 className='text-4xl md:text-5xl font-semibold text-black'>
                         Fashionable, quality, durable and best <br />
@@ -200,7 +200,7 @@ const page = () => {
 
             </div>
             {/* trending brands section */}
-            <div className='mt-30'>
+            <div className='mt-30 mb-45'>
 
                 <div className='text-center'>
                     <h1 className='text-black text-2xl md:text-4xl font-extrabold tracking-tight'>OUR TRENDING BRANDS</h1>

@@ -9,10 +9,10 @@ const Navbar = () => {
     return (
         <>
         <div className='bg-white shadow-sm px-8 py-4 flex justify-between items-center text-black'>
-            <div className='text-xl font-bold tracking-wide'>Home</div>
+            <div className='text-xl font-bold tracking-wide'><Link href={'/home'}>Home</Link></div>
             <div className='flex-1 flex items-center justify-center space-x-8'>
                 <Link href="#" className='text-sm hover:text-[#D99655] transition'>About</Link>
-                <Link href="#" className='text-sm hover:text-[#D99655] transition'>Products</Link>
+                <Link href="/products" className='text-sm hover:text-[#D99655] transition'>Products</Link>
                 <Link href="#" className='text-sm hover:text-[#D99655] transition'>Contact Us</Link>
                 <button 
                         onClick={() => setShowModal(true)} 
