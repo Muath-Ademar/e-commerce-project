@@ -78,12 +78,13 @@ module.exports.searchProduct = async (req, res) =>{
     try {
         const products = await Product.find({
             $or: [
-                { productName: { $regex: `\\b${query}\\b`, $options: 'i'}},
-                { description: { $regex: `\\b${query}\\b`, $options: 'i' } }, // whole word match
-                { category: { $regex: `\\b${query}\\b`, $options: 'i'}},
+                { productName: { $regex: query, $options: 'i'}},
+                { description: { $regex: query, $options: 'i' } }, // whole word match
+                { category: { $regex: query, $options: 'i'}},
+                // { description: { $regex: `\\b${query}\\b`, $options: 'i' } }, // whole word match
                 // work on adding the colors and sizes array later
             ]
-        }).select('productName description category sizes colors _id')
+        }).select('-__v')
 
         if(products.length === 0){
             return res.status(404).json({msg: 'No products found'})

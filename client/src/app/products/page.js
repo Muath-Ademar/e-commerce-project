@@ -1,8 +1,8 @@
 "use client"
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import List from '../../../components/List';
 import axios from 'axios';
+import { useSearchParams } from 'next/navigation';
 
 const page = () => {
     const [products, setProducts] = useState([])
@@ -12,6 +12,8 @@ const page = () => {
     const [sizes, setSizes] = useState('')
     const [minPrice, setMinPrice] = useState(0)
     const [maxPrice, setMaxPrice] = useState(400)
+    const searchParams = useSearchParams()
+    const searchQuery = useMemo(() => searchParams.get('key') || '', [searchParams]);
 
     const categories = ['Shoes', 'T-Shirts', 'Shorts', 'Hoodies', 'Tracksuits', 'Jackets', 'Sports Bras', 'Leggings', 'Socks', 'Accessories']
 
@@ -42,13 +44,18 @@ const page = () => {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/products')
+        const endpoint = searchQuery ? `products/search?key=${searchQuery}` :'products'
+        axios.get(`http://localhost:8000/api/${endpoint}`)
             .then(res => {
                 console.log(res.data)
-                const sorted = res.data.sort((a, b) => a.productName.localeCompare(b.productName))
-                setProducts(sorted)
+                if(Array.isArray(res.data)){
+
+                    const sorted = res.data.sort((a, b) => a.productName.localeCompare(b.productName))
+                    setProducts(sorted)
+                    setFilteredProducts([]);
+                }
             });
-    }, [])
+    }, [searchQuery])
     return (
         <div className="bg-[#fffaf5] min-h-screen">
             <div className="text-center py-12">
