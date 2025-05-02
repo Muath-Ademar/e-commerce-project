@@ -1,8 +1,11 @@
 "use client"
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const List = ({ products }) => {
+    const router = useRouter()
+    
     return (
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-16">
             {products.map((product, i) => (
@@ -23,7 +26,7 @@ const List = ({ products }) => {
                         <p className="text-sm mb-1">Sizes: {product.sizes.join(', ')}</p>
                         <p className="text-sm mb-1">Colors: {product.colors.join(', ')}</p>
                         <p className="text-sm mb-3">In Stock: {product.stock}</p>
-                        <button className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-4 py-2 rounded">
+                        <button onClick={()=> router.push(`/products/${product._id}`)} className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-4 py-2 rounded">
                             View Details
                         </button>
                     </div>
