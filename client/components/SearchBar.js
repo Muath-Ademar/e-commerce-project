@@ -1,27 +1,67 @@
 'use client'
+import axios from 'axios'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const SearchBar = () => {
-    const router = useRouter()
-    const [query, setQuery] = useState('')
+  const router = useRouter()
+  const [query, setQuery] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [searchedProducts, setSearchedProducts] = useState([])
+  const handleResultClick = (id) =>{
+    setIsOpen(false)
+    setSearchedProducts([])
+    router.push(`/products/${id}`)
+  }
 
-    const handleSearch = (e)=>{
-        e.preventDefault()
-        if(query.trim()){
-            router.push(`/products?key=${encodeURIComponent(query)}`)
-        }
+  useEffect(() => {
+    if (!query.trim()) {
+      setIsOpen(false)
+      setSearchedProducts([])
+      return
     }
+    axios.get(`http://localhost:8000/api/products/search?key=${encodeURIComponent(query)}`)
+      .then(res => {
+        console.log(res.data)
+        setSearchedProducts(res.data)
+        setIsOpen(true)
+      })
+      .catch(() => {
+        setSearchedProducts([])
+        setIsOpen(false)
+      })
+  }, [query])
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    if (query.trim()) {
+      router.push(`/products?key=${encodeURIComponent(query)}`)
+      setIsOpen(true)
+    }
+    else{
+      setIsOpen(false)
+    }
+  }
   return (
     <form onSubmit={handleSearch} className="relative w-64">
       <input
         type="text"
         name="search"
         value={query}
-        onChange={e=> setQuery(e.target.value)}
+        onChange={e => setQuery(e.target.value)}
         placeholder="Search for sportswear..."
         className="w-full pl-4 pr-10 py-2 text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#D99655] transition-all"
       />
+      {isOpen &&
+      <ul className="absolute left-0 mt-2 w-full z-10 bg-white border border-gray-300 rounded-xl shadow-lg overflow-hidden">
+        {searchedProducts.map((product, i)=>(
+          
+              <li key={i} onClick={()=> handleResultClick(product._id)} className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">{product.productName}</li>
+          
+        ))}
+      </ul>
+      }
       <button type="submit" className="absolute right-3 top-1/2 transform -translate-y-1/2">
         <svg
           className="w-4 h-4 text-gray-500 hover:text-[#D99655] transition"
