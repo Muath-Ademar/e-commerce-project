@@ -11,6 +11,7 @@ const List = ({ products }) => {
         const productsInCart = storedItems ? JSON.parse(storedItems) : []
         productsInCart.push(product)
         localStorage.setItem('ITEM', JSON.stringify(productsInCart))
+        window.dispatchEvent(new Event('cart-updated'));
     }
 
 

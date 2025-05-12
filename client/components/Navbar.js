@@ -12,9 +12,23 @@ const Navbar = () => {
     let total = 0
 
     useEffect(()=>{
-        const storedItems = localStorage.getItem('ITEM')
-        if(storedItems){
-            setProductsInCart(JSON.parse(storedItems))
+        const loadCart= ()=>{
+
+            const storedItems = localStorage.getItem('ITEM')
+            if(storedItems){
+                setProductsInCart(JSON.parse(storedItems))
+            }
+        };
+
+        // Intial load
+        loadCart()
+
+        //listen for cart updates
+
+        window.addEventListener('cart-updated', loadCart)
+
+        return ()=>{
+            window.removeEventListener('cart-updated', loadCart)
         }
     },[])
 
@@ -23,9 +37,10 @@ const Navbar = () => {
     }
     console.log(total)
 
-    const removeItemsfromLocalStorage = ()=>{
-        localStorage.removeItem('ITEM')
-        setProductsInCart([])
+    const removeItemsfromLocalStorage = (id)=>{
+        const updated = productsInCart.filter(p => p._id !== id)
+        localStorage.setItem('ITEM', JSON.stringify(updated))
+        setProductsInCart(updated)
     }
 
 
@@ -85,7 +100,7 @@ const Navbar = () => {
                                             <div className="text-xs text-gray-500">Size: {item.sizes[0]}</div>
                                         </div>
                                         <div className="text-sm font-semibold text-gray-700">${item.price.toFixed(2)}</div>
-                                        <XCircleIcon width={25} height={25} onClick={removeItemsfromLocalStorage} className='hover:cursor-pointer' />
+                                        <XCircleIcon width={25} height={25} onClick={()=>removeItemsfromLocalStorage(item._id)} className='hover:cursor-pointer' />
                                     </li>
                                 )) : (
                                     <p className="p-4 text-gray-500">Cart is empty</p>
