@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 const page = () => {
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
+    const [productsInCart,setProductsInCart] = useState([])
     const [category, setCategory] = useState('')
     const [colors, setColors] = useState('')
     const [sizes, setSizes] = useState('')
@@ -16,6 +17,13 @@ const page = () => {
     const searchQuery = useMemo(() => searchParams.get('key') || '', [searchParams]);
 
     const categories = ['Shoes', 'T-Shirts', 'Shorts', 'Hoodies', 'Tracksuits', 'Jackets', 'Sports Bras', 'Leggings', 'Socks', 'Accessories']
+
+    useEffect(()=>{
+        const storedItems = localStorage.getItem('ITEM')
+        if(storedItems){
+            setProductsInCart(JSON.parse(storedItems))
+        }
+    }, [])
 
 
     const handleSubmit = (e) => {

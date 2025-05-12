@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShoppingCartIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import Register from './Register';
 import SearchBar from './SearchBar';
@@ -8,17 +8,38 @@ import SearchBar from './SearchBar';
 const Navbar = () => {
     const [showModal, setShowModal] = useState(false);
     const [openCart, setOpenCart] = useState(false)
+    const [productsInCart,setProductsInCart] = useState([])
+    let total = 0
+
+    useEffect(()=>{
+        const storedItems = localStorage.getItem('ITEM')
+        if(storedItems){
+            setProductsInCart(JSON.parse(storedItems))
+        }
+    },[])
+
+    for(let product of productsInCart){
+        total += product.price
+    }
+    console.log(total)
+
+    const removeItemsfromLocalStorage = ()=>{
+        localStorage.removeItem('ITEM')
+        setProductsInCart([])
+    }
+
+
 
     const handleCartClick = () => {
-        if(openCart === false){
+        if (openCart === false) {
             setOpenCart(true)
         }
-        else{
+        else {
             setOpenCart(false)
         }
     }
 
-    const handleCartClose = ()=>{
+    const handleCartClose = () => {
         setOpenCart(false)
     }
 
@@ -46,33 +67,35 @@ const Navbar = () => {
                         <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-50">
                             <div className="p-4 border-b border-gray-100 font-semibold text-gray-800 flex justify-between items-center">
                                 <h1>
-                                    Cart Summary    
+                                    Cart Summary
                                 </h1>
-                                <XCircleIcon width={25} height={25} onClick={handleCartClose} className='hover:cursor-pointer'/>
+                                <XCircleIcon width={25} height={25} onClick={handleCartClose} className='hover:cursor-pointer' />
                             </div>
 
                             <ul className="divide-y divide-gray-100 max-h-64 overflow-y-auto">
-                                {/* Single Item */}
-                                <li className="flex items-center gap-4 p-4 hover:bg-gray-50">
-                                    <img
-                                        src="/placeholder.png"
-                                        alt="Product"
-                                        className="w-12 h-12 rounded-lg object-cover border border-gray-200"
-                                    />
-                                    <div className="flex-1">
-                                        <div className="text-sm font-medium text-gray-800">Running Shoes</div>
-                                        <div className="text-xs text-gray-500">Size: 42 • Qty: 1</div>
-                                    </div>
-                                    <div className="text-sm font-semibold text-gray-700">$89.99</div>
-                                </li>
-
-                                {/* Repeat li for other items */}
+                                {productsInCart.length > 0 ? productsInCart.map((item, i) => (
+                                    <li key={i} className="flex items-center gap-4 p-4 hover:bg-gray-50">
+                                        <img
+                                            src={item.images[0]}
+                                            alt={item.productName}
+                                            className="w-12 h-12 rounded-lg object-cover border border-gray-200"
+                                        />
+                                        <div className="flex-1">
+                                            <div className="text-sm font-medium text-gray-800">{item.productName}</div>
+                                            <div className="text-xs text-gray-500">Size: {item.sizes[0]}</div>
+                                        </div>
+                                        <div className="text-sm font-semibold text-gray-700">${item.price.toFixed(2)}</div>
+                                        <XCircleIcon width={25} height={25} onClick={removeItemsfromLocalStorage} className='hover:cursor-pointer' />
+                                    </li>
+                                )) : (
+                                    <p className="p-4 text-gray-500">Cart is empty</p>
+                                )}
                             </ul>
 
                             <div className="p-4 border-t border-gray-100">
                                 <div className="flex justify-between text-sm font-medium text-gray-700 mb-3">
                                     <span>Subtotal</span>
-                                    <span>$179.98</span>
+                                    <span>{total}</span>
                                 </div>
                                 <button className="w-full py-2 px-4 bg-[#D99655] text-white text-sm font-semibold rounded-lg hover:bg-[#c9833d] transition">
                                     Checkout

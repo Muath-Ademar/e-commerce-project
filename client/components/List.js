@@ -5,6 +5,16 @@ import React from 'react'
 
 const List = ({ products }) => {
     const router = useRouter()
+
+    const addtoCart = (product) =>{
+        const storedItems =  localStorage.getItem('ITEM')
+        const productsInCart = storedItems ? JSON.parse(storedItems) : []
+        productsInCart.push(product)
+        localStorage.setItem('ITEM', JSON.stringify(productsInCart))
+    }
+
+
+
     
     return (
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-16">
@@ -29,6 +39,7 @@ const List = ({ products }) => {
                         <button onClick={()=> router.push(`/products/${product._id}`)} className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-4 py-2 rounded">
                             View Details
                         </button>
+                        <button type="submit" onClick={()=>addtoCart(product)} className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-4 py-2 rounded">Add to cart</button>
                     </div>
 
                     <div className="p-4">
