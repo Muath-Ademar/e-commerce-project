@@ -4,46 +4,92 @@ import React, { useEffect, useState } from 'react';
 import { ShoppingCartIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import Register from './Register';
 import SearchBar from './SearchBar';
+import axios from 'axios';
 
 const Navbar = () => {
     const [showModal, setShowModal] = useState(false);
     const [openCart, setOpenCart] = useState(false)
-    const [productsInCart,setProductsInCart] = useState([])
+    const [productsInCart, setProductsInCart] = useState([])
     let total = 0
 
-    useEffect(()=>{
-        const loadCart= ()=>{
+    useEffect(() => {
+    const loadCart = async () => {
+        try {
+            const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+            const user = res.data.user;
 
-            const storedItems = localStorage.getItem('ITEM')
-            if(storedItems){
-                setProductsInCart(JSON.parse(storedItems))
+            const cartRes = await axios.get(`http://localhost:8000/api/cart/${user.id}`, { withCredentials: true });
+
+            const items = Array.isArray(cartRes.data.cart.items)
+                ? cartRes.data.cart.items.map(item => ({
+                    _id: item._id,
+                    productName: item.productName,
+                    price: item.price,
+                    images: item.images,
+                    quantity: item.quantity
+                }))
+                : [];
+
+            setProductsInCart(items);
+        } catch (error) {
+            const storedItems = localStorage.getItem('ITEM');
+            if (storedItems) {
+                setProductsInCart(JSON.parse(storedItems));
+            } else {
+                setProductsInCart([]);
             }
-        };
-
-        // Intial load
-        loadCart()
-
-        //listen for cart updates
-
-        window.addEventListener('cart-updated', loadCart)
-
-        return ()=>{
-            window.removeEventListener('cart-updated', loadCart)
         }
-    },[])
+    };
 
-    for(let product of productsInCart){
-        total += product.price
+    loadCart(); // Initial load
+    window.addEventListener('cart-updated', loadCart);
+
+    return () => {
+        window.removeEventListener('cart-updated', loadCart);
+    };
+}, []);
+
+
+    for (let product of productsInCart) {
+        total += product.price * product.quantity
     }
-    console.log(total)
+    
 
-    const removeItemsfromLocalStorage = (id)=>{
-        const updated = productsInCart.filter(p => p._id !== id)
-        localStorage.setItem('ITEM', JSON.stringify(updated))
-        setProductsInCart(updated)
-    }
+    const removeItemsfromLocalStorage = async (id) => {
+        
+
+        let isAuthenticated = false;
+
+        try {
+            const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+            isAuthenticated = !!res.data.user;
+        } catch (error) {
+            // Log and proceed as guest
+            console.warn('Auth check failed, assuming guest user:', error.response?.status);
+        }
+
+        const updated = productsInCart.filter(p => String(p._id) !== String(id));
+
+        if (isAuthenticated) {
+            try {
+                const deleteRes = await axios.delete(`http://localhost:8000/api/cart/remove/${id}`, { withCredentials: true });
+                console.log('Delete response:', deleteRes.status);
+            } catch (error) {
+                console.error('Failed to delete from server:', error);
+                return; // Optional: stop here if you want to avoid showing incorrect UI
+            }
+        } else {
+            // Guest user - remove from localStorage
+            localStorage.setItem('ITEM', JSON.stringify(updated));
+        }
+
+        // In both cases, update the cart in UI
+        setProductsInCart(updated);
+    };
 
 
+
+    console.log('productsInCart items:', productsInCart);
 
     const handleCartClick = () => {
         if (openCart === false) {
@@ -91,16 +137,16 @@ const Navbar = () => {
                                 {productsInCart.length > 0 ? productsInCart.map((item, i) => (
                                     <li key={i} className="flex items-center gap-4 p-4 hover:bg-gray-50">
                                         <img
-                                            src={item.images[0]}
+                                            src={item.images?.[0] || 'https://via.placeholder.com/150'}
                                             alt={item.productName}
                                             className="w-12 h-12 rounded-lg object-cover border border-gray-200"
                                         />
                                         <div className="flex-1">
                                             <div className="text-sm font-medium text-gray-800">{item.productName}</div>
-                                            <div className="text-xs text-gray-500">Size: {item.sizes[0]}</div>
+                                            <div className="text-xs text-gray-500">Quantity: {item.quantity}</div>
                                         </div>
-                                        <div className="text-sm font-semibold text-gray-700">${item.price.toFixed(2)}</div>
-                                        <XCircleIcon width={25} height={25} onClick={()=>removeItemsfromLocalStorage(item._id)} className='hover:cursor-pointer' />
+                                        <div className="text-sm font-semibold text-gray-700">${Number(item.price || 0).toFixed(2)}</div>
+                                        <XCircleIcon width={25} height={25} onClick={() => removeItemsfromLocalStorage(item._id)} className='hover:cursor-pointer' />
                                     </li>
                                 )) : (
                                     <p className="p-4 text-gray-500">Cart is empty</p>
@@ -110,7 +156,7 @@ const Navbar = () => {
                             <div className="p-4 border-t border-gray-100">
                                 <div className="flex justify-between text-sm font-medium text-gray-700 mb-3">
                                     <span>Subtotal</span>
-                                    <span>{total}</span>
+                                    <span>${total.toFixed(2)}</span>
                                 </div>
                                 <button className="w-full py-2 px-4 bg-[#D99655] text-white text-sm font-semibold rounded-lg hover:bg-[#c9833d] transition">
                                     Checkout

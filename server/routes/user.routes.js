@@ -9,5 +9,11 @@ module.exports = function(app){
     app.get('/api/users/:id', authenticate, isAdmin, UserController.getOneUser)
     app.delete('/api/users/delete', authenticate, isAdmin, UserController.deleteAll)
     app.delete('/api/user/delete/:id', authenticate, isAdmin, UserController.deleteOneUser)
+    app.get('/api/auth', authenticate, (req, res) => {
+    res.status(200).json({
+        verified: true,
+        user: req.user
+    });
+});
 
 }

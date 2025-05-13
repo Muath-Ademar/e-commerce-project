@@ -9,54 +9,76 @@ const page = () => {
     const [errors, setErrors] = useState({})
     const router = useRouter()
 
-    const handleSubmit = (e) =>{
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        axios.post("http://localhost:8000/api/login", {
-            email,
-            password
-        }, {withCredentials: true})
+        try {
+            const res = await axios.post("http://localhost:8000/api/login", {
+                email,
+                password
+            }, { withCredentials: true });
 
-        .then(res =>{
-            setEmail("")
-            setPassword("")
-            router.push('/home')
-        })
-        .catch((err) => {
+            setEmail("");
+            setPassword("");
+            router.push('/home');
+
+            // Now sync cart only after login success
+            const localCart = JSON.parse(localStorage.getItem('ITEM'));
+
+            if (localCart && Array.isArray(localCart) && localCart.length > 0) {
+                const items = localCart.map(item => ({
+                    productId: item._id,
+                    quantity: item.quantity
+                }));
+
+                try {
+                    const cartRes = await axios.post(
+                        'http://localhost:8000/api/cart/add',
+                        { items },
+                        { withCredentials: true }
+                    );
+                    console.log("🛒 Cart synced to backend:", cartRes.data);
+                    localStorage.removeItem('ITEM');
+                    window.dispatchEvent(new Event('cart-updated'));
+                } catch (cartErr) {
+                    console.error("Cart sync error:", cartErr.response?.data || cartErr);
+                }
+            }
+        } catch (err) {
             if (err.response && err.response.data) {
-                console.log(err.response.data);
-                const errorsObject = err.response.data.errors;
+                const errorsObject = err.response.data.errors || {};
                 const errorMessages = {};
 
                 for (let key of Object.keys(errorsObject)) {
                     errorMessages[key] = errorsObject[key].message;
                 }
 
-                setErrors(errorMessages); // or whatever you're doing with them
+                setErrors(errorMessages);
             } else {
                 console.error("Unexpected error:", err);
             }
-        });
+        }
     }
-  return (
-    <form className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-md space-y-4" onSubmit={handleSubmit}>
-    <h2 className="text-2xl font-semibold text-gray-700 text-center">Login</h2>
 
-    <div>
-        <label className="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black border-[#ededed] " />
-    </div>
+    return (
+        <form className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-md space-y-4" onSubmit={handleSubmit}>
+            <h2 className="text-2xl font-semibold text-gray-700 text-center">Login</h2>
 
-    <div>
-        <label className="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black border-[#ededed]" />
-    </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black border-[#ededed] " />
+            </div>
 
-    <button type="submit" className="w-full bg-[#fe520a] text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-200">
-        Login
-    </button>
-</form>
-  )
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black border-[#ededed]" />
+            </div>
+
+            <button type="submit" className="w-full bg-[#fe520a] text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-200">
+                Login
+            </button>
+        </form>
+    )
 }
 
 export default page
