@@ -10,40 +10,60 @@ const Register = ({onClose}) => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState({})
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-
-        axios.post("http://localhost:8000/api/register", {
-            firstName,
-            lastName,
-            email,
-            password,
-            confirmPassword
-        }, { withCredentials: true })
-
-            .then(res => {
-                setFirstName('')
-                setLastName('')
-                setEmail('')
-                setPassword('')
-                setConfirmPassword("")
-                onClose()
-            })
-            .catch((err) => {
-                if (err.response && err.response.data) {
-                    console.log(err.response.data);
-                    const errorsObject = err.response.data.errors;
-                    const errorMessages = {};
-
-                    for (let key of Object.keys(errorsObject)) {
-                        errorMessages[key] = errorsObject[key].message;
-                    }
-
-                    setErrors(errorMessages); // or whatever you're doing with them
-                } else {
-                    console.error("Unexpected error:", err);
+        try {
+            const res = await axios.post("http://localhost:8000/api/register", {
+                firstName,
+                lastName,
+                email,
+                password,
+                confirmPassword
+            }, { withCredentials: true })
+            
+            setFirstName('')
+            setLastName('')
+            setEmail('')
+            setPassword('')
+            setConfirmPassword("")
+            onClose()
+            
+            const localCart = JSON.parse(localStorage.getItem('ITEM'));
+            if(localCart  && Array.isArray(localCart) && localCart.length > 0){
+                const items = localCart.map(item=>({
+                    productId: item._id,
+                    quantity: item.quantity
+                }))
+                
+                try {
+                    const cartRes = await axios.post(
+                        'http://localhost:8000/api/cart/add',{
+                            items
+                        },
+                        {withCredentials: true}
+                    );
+                    console.log("🛒 Cart synced to backend:", cartRes.data);
+                    localStorage.removeItem('ITEM')
+                    window.dispatchEvent(new Event('cart-updated'))
+                } catch (cartErr) {
+                    console.error("Cart sync error:", cartErr.response?.data || cartErr);
                 }
-            });
+            }
+        } catch (err) {
+            if (err.response && err.response.data) {
+                console.log(err.response.data);
+                const errorsObject = err.response.data.errors;
+                const errorMessages = {};
+    
+                for (let key of Object.keys(errorsObject)) {
+                    errorMessages[key] = errorsObject[key].message;
+                }
+    
+                setErrors(errorMessages); // or whatever you're doing with them
+            } else {
+                console.error("Unexpected error:", err);
+            }
+        }
     }
     return (
         <form className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-md space-y-4" onSubmit={handleSubmit}>
