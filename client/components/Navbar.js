@@ -6,10 +6,31 @@ import Register from './Register';
 import SearchBar from './SearchBar';
 import axios from 'axios';
 
+
 const Navbar = () => {
     const [showModal, setShowModal] = useState(false);
     const [openCart, setOpenCart] = useState(false)
     const [productsInCart, setProductsInCart] = useState([])
+    const [userId, setUserId] = useState()  
+
+
+
+        
+        const getUser = async() =>{
+                try{
+                
+                const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true});
+                const user = res.data.user
+                setUserId(user.id)
+            }
+            catch(error){
+                console.log('error', error)
+            }
+        }
+ useEffect(()=>{
+    getUser()
+ }, [])
+
     let total = 0
 
     useEffect(() => {
@@ -89,7 +110,7 @@ const Navbar = () => {
 
 
 
-    console.log('productsInCart items:', productsInCart);
+
 
     const handleCartClick = () => {
         if (openCart === false) {
@@ -112,12 +133,19 @@ const Navbar = () => {
                     <Link href="#" className='text-sm hover:text-[#D99655] transition'>About</Link>
                     <Link href="/products" className='text-sm hover:text-[#D99655] transition'>Products</Link>
                     <Link href="#" className='text-sm hover:text-[#D99655] transition'>Contact Us</Link>
+                    {!userId &&
                     <button
-                        onClick={() => setShowModal(true)}
-                        className='text-sm hover:text-[#D99655] transition'
+                    onClick={() => setShowModal(true)}
+                    className='text-sm hover:text-[#D99655] transition'
                     >
-                        Register
+                        Register / Login
                     </button>
+                    }
+                    {userId &&
+                    <button className='text-sm hover:text-[#d99655] transition'>
+                        Logout
+                    </button>
+                    }
                     <div className='relative ml-4'>
                         <SearchBar />
                     </div>
