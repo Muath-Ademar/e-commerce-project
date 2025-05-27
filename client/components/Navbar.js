@@ -15,6 +15,15 @@ const Navbar = () => {
 
 
 
+        const logout = ()=>{
+            axios.get('http://localhost:8000/api/logout', {withCredentials: true})
+            .then(res=>{ 
+                console.log(res.data)
+                setUserId(null)
+            })
+            .catch(err=> console.log(err))
+        }
+
         
         const getUser = async() =>{
                 try{
@@ -127,7 +136,8 @@ const Navbar = () => {
 
     return (
         <>
-            <div className='bg-white shadow-sm px-8 py-4 flex justify-between items-center text-black'>
+            <div className='bg-white shadow-sm px-8 py-4 flex items-center justify-between text-black'>
+    
                 <div className='text-xl font-bold tracking-wide'><Link href={'/home'}>Home</Link></div>
                 <div className='flex-1 flex items-center justify-center space-x-8'>
                     <Link href="#" className='text-sm hover:text-[#D99655] transition'>About</Link>
@@ -142,7 +152,7 @@ const Navbar = () => {
                     </button>
                     }
                     {userId &&
-                    <button className='text-sm hover:text-[#d99655] transition'>
+                    <button className='text-sm hover:text-[#d99655] transition' onClick={logout}>
                         Logout
                     </button>
                     }

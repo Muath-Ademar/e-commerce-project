@@ -4,7 +4,7 @@ const { isAdmin } = require("../config/admin.middleware")
 module.exports = function(app){
     app.post('/api/register', UserController.register);
     app.post('/api/login', UserController.login);
-    app.get('/api/logout', UserController.logout);
+    app.get('/api/logout', authenticate, UserController.logout);
     app.get('/api/users', authenticate, isAdmin ,UserController.getAllUsers);
     app.get('/api/users/:id', authenticate, isAdmin, UserController.getOneUser)
     app.delete('/api/users/delete', authenticate, isAdmin, UserController.deleteAll)
