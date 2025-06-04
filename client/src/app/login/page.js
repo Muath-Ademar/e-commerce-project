@@ -1,13 +1,16 @@
 "use client"
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const page = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [errors, setErrors] = useState({})
     const router = useRouter()
+
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,17 +23,16 @@ const page = () => {
 
             setEmail("");
             setPassword("");
-            router.push('/home');
 
             // Now sync cart only after login success
             const localCart = JSON.parse(localStorage.getItem('ITEM'));
-
+            
             if (localCart && Array.isArray(localCart) && localCart.length > 0) {
                 const items = localCart.map(item => ({
                     productId: item._id,
                     quantity: item.quantity
                 }));
-
+                
                 try {
                     const cartRes = await axios.post(
                         'http://localhost:8000/api/cart/add',
@@ -44,6 +46,8 @@ const page = () => {
                     console.error("Cart sync error:", cartErr.response?.data || cartErr);
                 }
             }
+            router.push('/home');
+            
         } catch (err) {
             if (err.response && err.response.data) {
                 const errorsObject = err.response.data.errors || {};

@@ -2,7 +2,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 
-const Register = ({onClose}) => {
+const Register = ({onClose, onLoginSuccess}) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -27,6 +27,7 @@ const Register = ({onClose}) => {
             setPassword('')
             setConfirmPassword("")
             onClose()
+            onLoginSuccess()
             
             const localCart = JSON.parse(localStorage.getItem('ITEM'));
             if(localCart  && Array.isArray(localCart) && localCart.length > 0){

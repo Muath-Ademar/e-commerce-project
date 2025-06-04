@@ -5,88 +5,91 @@ import { ShoppingCartIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import Register from './Register';
 import SearchBar from './SearchBar';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 
-const Navbar = () => {
+const Navbar = ({ props }) => {
     const [showModal, setShowModal] = useState(false);
     const [openCart, setOpenCart] = useState(false)
     const [productsInCart, setProductsInCart] = useState([])
-    const [userId, setUserId] = useState()  
+    const [userId, setUserId] = useState()
+    const router = useRouter()
 
 
 
-        const logout = ()=>{
-            axios.get('http://localhost:8000/api/logout', {withCredentials: true})
-            .then(res=>{ 
+    const logout = () => {
+        axios.get('http://localhost:8000/api/logout', { withCredentials: true })
+            .then(res => {
                 console.log(res.data)
                 setUserId(null)
+                router.push('/home')
             })
-            .catch(err=> console.log(err))
-        }
+            .catch(err => console.log(err))
+    }
 
-        
-        const getUser = async() =>{
-                try{
-                
-                const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true});
-                const user = res.data.user
-                setUserId(user.id)
-            }
-            catch(error){
-                console.log('error', error)
-            }
+
+    const getUser = async () => {
+        try {
+
+            const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+            const user = res.data.user
+            setUserId(user.id)
         }
- useEffect(()=>{
-    getUser()
- }, [])
+        catch (error) {
+            console.log('error', error)
+        }
+    }
+    useEffect(() => {
+        getUser()
+    }, [])
 
     let total = 0
 
     useEffect(() => {
-    const loadCart = async () => {
-        try {
-            const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
-            const user = res.data.user;
+        const loadCart = async () => {
+            try {
+                const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+                const user = res.data.user;
 
-            const cartRes = await axios.get(`http://localhost:8000/api/cart/${user.id}`, { withCredentials: true });
+                const cartRes = await axios.get(`http://localhost:8000/api/cart/${user.id}`, { withCredentials: true });
 
-            const items = Array.isArray(cartRes.data.cart.items)
-                ? cartRes.data.cart.items.map(item => ({
-                    _id: item._id,
-                    productName: item.productName,
-                    price: item.price,
-                    images: item.images,
-                    quantity: item.quantity
-                }))
-                : [];
+                const items = Array.isArray(cartRes.data.cart.items)
+                    ? cartRes.data.cart.items.map(item => ({
+                        _id: item._id,
+                        productName: item.productName,
+                        price: item.price,
+                        images: item.images,
+                        quantity: item.quantity
+                    }))
+                    : [];
 
-            setProductsInCart(items);
-        } catch (error) {
-            const storedItems = localStorage.getItem('ITEM');
-            if (storedItems) {
-                setProductsInCart(JSON.parse(storedItems));
-            } else {
-                setProductsInCart([]);
+                setProductsInCart(items);
+            } catch (error) {
+                const storedItems = localStorage.getItem('ITEM');
+                if (storedItems) {
+                    setProductsInCart(JSON.parse(storedItems));
+                } else {
+                    setProductsInCart([]);
+                }
             }
-        }
-    };
+        };
 
-    loadCart(); // Initial load
-    window.addEventListener('cart-updated', loadCart);
+        loadCart(); // Initial load
+        window.addEventListener('cart-updated', loadCart);
 
-    return () => {
-        window.removeEventListener('cart-updated', loadCart);
-    };
-}, []);
+        return () => {
+            window.removeEventListener('cart-updated', loadCart);
+        };
+    }, []);
 
 
     for (let product of productsInCart) {
         total += product.price * product.quantity
     }
-    
+
 
     const removeItemsfromLocalStorage = async (id) => {
-        
+
 
         let isAuthenticated = false;
 
@@ -134,27 +137,36 @@ const Navbar = () => {
         setOpenCart(false)
     }
 
+    const goToOrder = () => {
+        if (userId) {
+            router.push('/order')
+        }
+        else {
+            router.push('/login')
+        }
+    }
+
     return (
         <>
             <div className='bg-white shadow-sm px-8 py-4 flex items-center justify-between text-black'>
-    
+
                 <div className='text-xl font-bold tracking-wide'><Link href={'/home'}>Home</Link></div>
                 <div className='flex-1 flex items-center justify-center space-x-8'>
                     <Link href="#" className='text-sm hover:text-[#D99655] transition'>About</Link>
                     <Link href="/products" className='text-sm hover:text-[#D99655] transition'>Products</Link>
                     <Link href="#" className='text-sm hover:text-[#D99655] transition'>Contact Us</Link>
                     {!userId &&
-                    <button
-                    onClick={() => setShowModal(true)}
-                    className='text-sm hover:text-[#D99655] transition'
-                    >
-                        Register / Login
-                    </button>
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className='text-sm hover:text-[#D99655] transition'
+                        >
+                            Register / Login
+                        </button>
                     }
                     {userId &&
-                    <button className='text-sm hover:text-[#d99655] transition' onClick={logout}>
-                        Logout
-                    </button>
+                        <button className='text-sm hover:text-[#d99655] transition' onClick={logout}>
+                            Logout
+                        </button>
                     }
                     <div className='relative ml-4'>
                         <SearchBar />
@@ -196,7 +208,7 @@ const Navbar = () => {
                                     <span>Subtotal</span>
                                     <span>${total.toFixed(2)}</span>
                                 </div>
-                                <button className="w-full py-2 px-4 bg-[#D99655] text-white text-sm font-semibold rounded-lg hover:bg-[#c9833d] transition">
+                                <button onClick={goToOrder} className="w-full py-2 px-4 bg-[#D99655] text-white text-sm font-semibold rounded-lg hover:bg-[#c9833d] transition">
                                     Checkout
                                 </button>
                             </div>
@@ -214,7 +226,7 @@ const Navbar = () => {
                         >
                             &times;
                         </button>
-                        <Register onClose={() => setShowModal(false)} />
+                        <Register onClose={() => setShowModal(false)} onLoginSuccess={getUser} />
                     </div>
                 </div>
             )}
