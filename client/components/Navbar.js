@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 
-const Navbar = ({ props }) => {
+const Navbar = () => {
     const [showModal, setShowModal] = useState(false);
     const [openCart, setOpenCart] = useState(false)
     const [productsInCart, setProductsInCart] = useState([])
@@ -34,6 +34,7 @@ const Navbar = ({ props }) => {
             const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
             const user = res.data.user
             setUserId(user.id)
+            
         }
         catch (error) {
             console.log('error', error)
@@ -86,6 +87,31 @@ const Navbar = ({ props }) => {
     for (let product of productsInCart) {
         total += product.price * product.quantity
     }
+    const goToOrder = () => {
+        if (userId) {
+            const orderData = {
+                userId : userId,
+                products: productsInCart.map(item => ({
+                    productId: item._id,
+                    productQuantity: item.quantity,
+                    priceAtPurchase: item.price,
+                    productName: item.productName,  // for UI rendering
+                })),
+                shippingAddress: {
+                    fullName: '',
+                    addressLine: '',
+                    city: '',
+                },
+                total: total // for UI rendering
+            }
+            localStorage.setItem('ORDER_DATA', JSON.stringify(orderData))
+            router.push('/order')
+            
+        }
+        else {
+            router.push('/login')
+        }
+    }
 
 
     const removeItemsfromLocalStorage = async (id) => {
@@ -137,14 +163,6 @@ const Navbar = ({ props }) => {
         setOpenCart(false)
     }
 
-    const goToOrder = () => {
-        if (userId) {
-            router.push('/order')
-        }
-        else {
-            router.push('/login')
-        }
-    }
 
     return (
         <>

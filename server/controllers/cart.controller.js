@@ -156,3 +156,19 @@ module.exports.getUserCart = async (req, res) => {
         res.status(500).json({ msg: "Error in fetching cart ", error: error.message })
     }
 }
+
+module.exports.deleteEntireCart = async (req, res) =>{
+    const userId = req.user.id
+
+    try {
+        const deletedCart = await Cart.findOneAndDelete({userId})
+        if (!deletedCart){
+            return res.status(404).json({msg: "Cart not found for this user"})
+        }
+        res.status(200).json({msg: "Cart deleted successfully."})
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Error deleting cart", error: error.message });
+    }
+}

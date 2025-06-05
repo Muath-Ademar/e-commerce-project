@@ -6,4 +6,5 @@ module.exports = function(app){
     app.delete('/api/cart/remove/:id', authenticate, CartController.removeProductFromCart)
     app.patch('/api/cart/update/:id', authenticate, CartController.updateSingleProductInCart)
     app.get('/api/cart/:id', authenticate, CartController.getUserCart)
+    app.delete('/api/cart/delete', authenticate, CartController.deleteEntireCart)
 }
