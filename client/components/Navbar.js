@@ -13,6 +13,7 @@ const Navbar = () => {
     const [openCart, setOpenCart] = useState(false)
     const [productsInCart, setProductsInCart] = useState([])
     const [userId, setUserId] = useState()
+    const [role, setRole] = useState(null)
     const router = useRouter()
 
 
@@ -27,11 +28,16 @@ const Navbar = () => {
             .catch(err => console.log(err))
     }
 
+    const getUserRole = () =>{
+        
+    }
+
 
     const getUser = async () => {
         try {
 
             const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+            console.log(res.data.user.id.role)
             const user = res.data.user
             setUserId(user.id)
             
@@ -43,6 +49,7 @@ const Navbar = () => {
     useEffect(() => {
         getUser()
     }, [])
+    
 
     let total = 0
 
@@ -236,18 +243,27 @@ const Navbar = () => {
                 </div>
             </div>
             {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <div className="bg-white p-6 rounded-xl shadow-xl relative w-full max-w-xl">
-                        <button
-                            onClick={() => setShowModal(false)}
-                            className="absolute top-3 right-4 text-gray-500 hover:text-black text-xl font-bold"
-                        >
-                            &times;
-                        </button>
-                        <Register onClose={() => setShowModal(false)} onLoginSuccess={getUser} />
-                    </div>
-                </div>
-            )}
+  <div className="fixed inset-0 z-50">
+    {/* Blur overlay (applies to the page behind) */}
+    <div 
+      className="fixed inset-0 backdrop-blur-[4px]" 
+      onClick={() => setShowModal(false)} // Close modal when clicking backdrop
+    ></div>
+
+    {/* Modal content */}
+    <div className="fixed inset-0 flex justify-center items-center">
+      <div className="bg-white  rounded-xl shadow-xl relative w-[28rem] max-w-xl">
+        <button
+          onClick={() => setShowModal(false)}
+          className="absolute top-3 right-4 text-gray-500 hover:text-black text-xl font-bold"
+        >
+          &times;
+        </button>
+        <Register onClose={() => setShowModal(false)} onLoginSuccess={getUser} />
+      </div>
+    </div>
+  </div>
+)}
         </>
     );
 };

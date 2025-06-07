@@ -50,7 +50,7 @@ module.exports.getAllUsers = (req, res) =>{
 
 module.exports.getOneUser = async(req, res) => {
     try {
-        const user = await User.findById({_id: req.params.id})
+        const user = await User.findById(req.params.id)
         
         if(!user) return res.status(404).json({msg:"User not found"})
 
@@ -96,3 +96,16 @@ module.exports.deleteAll = async (req, res) => {
         res.status(500).json({ error: "An error occurred while deleting users." });
     }
 };
+
+module.exports.getRole = async (req, res) =>{
+    const userId = req.user.id
+    try {
+        const user = await User.findById(userId)
+        if(!user) return res.status(404).json({msg:"User not found"})
+        res.status(200).json({msg: "Role fetched successfully", role: user.role})
+        
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({msg: 'error in fetching role'})
+    }
+}
