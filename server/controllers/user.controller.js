@@ -97,15 +97,15 @@ module.exports.deleteAll = async (req, res) => {
     }
 };
 
-module.exports.getRole = async (req, res) =>{
+module.exports.giveTheUserTheirInfo = async (req, res) =>{
     const userId = req.user.id
     try {
         const user = await User.findById(userId)
         if(!user) return res.status(404).json({msg:"User not found"})
-        res.status(200).json({msg: "Role fetched successfully", role: user.role})
+        res.status(200).json({msg: "User fetched successfully", user: user})
         
     } catch (error) {
         console.error(error)
-        res.status(500).json({msg: 'error in fetching role'})
+        res.status(500).json({msg: 'error in fetching user'})
     }
 }

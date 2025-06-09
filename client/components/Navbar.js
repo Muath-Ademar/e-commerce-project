@@ -1,11 +1,14 @@
 'use client'
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { ShoppingCartIcon, XCircleIcon } from '@heroicons/react/24/solid';
+import React, { useEffect, useRef, useState } from 'react';
+import { CreditCardIcon, ShoppingCartIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import Register from './Register';
 import SearchBar from './SearchBar';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { Person, SettingsInputComponent } from '@mui/icons-material';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
 const Navbar = () => {
@@ -13,43 +16,79 @@ const Navbar = () => {
     const [openCart, setOpenCart] = useState(false)
     const [productsInCart, setProductsInCart] = useState([])
     const [userId, setUserId] = useState()
-    const [role, setRole] = useState(null)
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("")
+    const [openProfile, setOpenProfile] = useState(false)
     const router = useRouter()
+    const cartRef = useRef(null);
+    const profileRef = useRef(null);
+
+    const useOutsideClick = (ref, callback) => {
+        useEffect(() => {
+            const handleClickOutside = (event) => {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    callback();
+                }
+            };
+
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        }, [ref, callback]);
+    };
 
 
+    useOutsideClick(cartRef, () => {
+        setOpenCart(false);
+    });
+
+    useOutsideClick(profileRef, () => {
+        setOpenProfile(false);
+    });
+
+
+    const getUser = async () => {
+        try {
+            const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+            setFirstName(res.data.user.firstName)
+            setLastName(res.data.user.lastName)
+            setEmail(res.data.user.email)
+
+        } catch (error) {
+            console.log('error: ' + error)
+        }
+    }
 
     const logout = () => {
         axios.get('http://localhost:8000/api/logout', { withCredentials: true })
             .then(res => {
-                console.log(res.data)
                 setUserId(null)
                 router.push('/home')
             })
             .catch(err => console.log(err))
     }
 
-    const getUserRole = () =>{
-        
-    }
 
 
-    const getUser = async () => {
+    const authUser = async () => {
         try {
 
             const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
-            console.log(res.data.user.id.role)
-            const user = res.data.user
-            setUserId(user.id)
-            
+            const user = res.data.user.id
+            setUserId(user)
+
         }
         catch (error) {
             console.log('error', error)
         }
     }
     useEffect(() => {
+        authUser()
         getUser()
     }, [])
-    
+
 
     let total = 0
 
@@ -97,7 +136,7 @@ const Navbar = () => {
     const goToOrder = () => {
         if (userId) {
             const orderData = {
-                userId : userId,
+                userId: userId,
                 products: productsInCart.map(item => ({
                     productId: item._id,
                     productQuantity: item.quantity,
@@ -113,7 +152,7 @@ const Navbar = () => {
             }
             localStorage.setItem('ORDER_DATA', JSON.stringify(orderData))
             router.push('/order')
-            
+
         }
         else {
             router.push('/login')
@@ -160,6 +199,7 @@ const Navbar = () => {
     const handleCartClick = () => {
         if (openCart === false) {
             setOpenCart(true)
+            setOpenProfile(false)
         }
         else {
             setOpenCart(false)
@@ -169,6 +209,20 @@ const Navbar = () => {
     const handleCartClose = () => {
         setOpenCart(false)
     }
+
+    const handleProfileOpen = () => {
+        if (openProfile === false) {
+            setOpenProfile(true)
+            setOpenCart(false)
+        }
+        else {
+            setOpenProfile(false)
+        }
+    }
+    const handleProfileClose = () => {
+        setOpenProfile(false)
+    }
+
 
 
     return (
@@ -188,19 +242,64 @@ const Navbar = () => {
                             Register / Login
                         </button>
                     }
-                    {userId &&
-                        <button className='text-sm hover:text-[#d99655] transition' onClick={logout}>
-                            Logout
-                        </button>
-                    }
                     <div className='relative ml-4'>
                         <SearchBar />
                     </div>
                 </div>
+                {userId &&
+                    <>
+                        <button onClick={handleProfileOpen} className='text-gray-700 hover:text-[#D99655] cursor-pointer transition'>
+                            <Person />
+                        </button>
+                        {openProfile &&
+                            <div ref={profileRef} className="absolute right-16 top-14 w-56 bg-white rounded-lg shadow-lg border border-gray-100 z-50 overflow-hidden transition-all duration-200 transform origin-top-right">
+                                <div className="py-1">
+                                    {/* User Profile */}
+                                    <div className="px-4 py-3 border-b border-gray-100 flex items-center space-x-3">
+                                        <div>
+                                            <p className="font-medium text-gray-900">{firstName} {lastName}</p>
+                                            <p className="text-xs text-gray-500">{email}</p>
+                                        </div>
+                                        <XCircleIcon width={25} height={25} onClick={handleProfileClose} className='hover:cursor-pointer' />
+                                    </div>
+
+                                    {/* Menu Items */}
+                                    <button className="w-full px-4 py-3 hover:bg-gray-50 flex items-center space-x-3 text-gray-700 transition-colors duration-150 hover:cursor-pointer" onClick={() => router.push('/orders')}>
+                                        <ReceiptLongIcon className="w-5 h-5 text-gray-500" />
+                                        <span>Order History</span>
+                                    </button>
+
+                                    <button className="w-full px-4 py-3 hover:bg-gray-50 flex items-center space-x-3 text-gray-700 transition-colors duration-150 hover:cursor-pointer">
+                                        <CreditCardIcon className="w-5 h-5 text-gray-500" />
+                                        <span>Payment Methods</span>
+                                    </button>
+
+                                    <button className="w-full px-4 py-3 hover:bg-gray-50 flex items-center space-x-3 text-gray-700 transition-colors duration-150 hover:cursor-pointer">
+                                        <FavoriteIcon className="w-5 h-5 text-gray-500" />
+                                        <span>Wishlist</span>
+                                        <span className="ml-auto bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded-full">3</span>
+                                    </button>
+
+                                    <button className="w-full px-4 py-3 hover:bg-gray-50 flex items-center space-x-3 text-gray-700 transition-colors duration-150 hover:cursor-pointer">
+                                        <SettingsInputComponent className="w-5 h-5 text-gray-500" />
+                                        <span>Account Settings</span>
+                                    </button>
+
+                                    {/* Footer */}
+                                    <div className="px-4 py-2 border-t border-gray-100 bg-gray-50">
+                                        <button className="w-full text-left text-sm text-red-600 hover:text-red-800 transition-colors duration-150 hover:cursor-pointer" onClick={logout}>
+                                            Sign Out
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </>
+                }
                 <div className='ml-4'>
                     <ShoppingCartIcon onClick={handleCartClick} className='h-6 w-6 text-gray-700 hover:text-[#D99655] cursor-pointer transition' />
                     {openCart &&
-                        <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-50">
+                        <div ref={cartRef} className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-50">
                             <div className="p-4 border-b border-gray-100 font-semibold text-gray-800 flex justify-between items-center">
                                 <h1>
                                     Cart Summary
@@ -243,27 +342,27 @@ const Navbar = () => {
                 </div>
             </div>
             {showModal && (
-  <div className="fixed inset-0 z-50">
-    {/* Blur overlay (applies to the page behind) */}
-    <div 
-      className="fixed inset-0 backdrop-blur-[4px]" 
-      onClick={() => setShowModal(false)} // Close modal when clicking backdrop
-    ></div>
+                <div className="fixed inset-0 z-50">
+                    {/* Blur overlay (applies to the page behind) */}
+                    <div
+                        className="fixed inset-0 backdrop-blur-[4px]"
+                        onClick={() => setShowModal(false)} // Close modal when clicking backdrop
+                    ></div>
 
-    {/* Modal content */}
-    <div className="fixed inset-0 flex justify-center items-center">
-      <div className="bg-white  rounded-xl shadow-xl relative w-[28rem] max-w-xl">
-        <button
-          onClick={() => setShowModal(false)}
-          className="absolute top-3 right-4 text-gray-500 hover:text-black text-xl font-bold"
-        >
-          &times;
-        </button>
-        <Register onClose={() => setShowModal(false)} onLoginSuccess={getUser} />
-      </div>
-    </div>
-  </div>
-)}
+                    {/* Modal content */}
+                    <div className="fixed inset-0 flex justify-center items-center">
+                        <div className="bg-white  rounded-xl shadow-xl relative w-[28rem] max-w-xl">
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="absolute top-3 right-4 text-gray-500 hover:text-black text-xl font-bold"
+                            >
+                                &times;
+                            </button>
+                            <Register onClose={() => setShowModal(false)} onLoginSuccess={authUser} />
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 };

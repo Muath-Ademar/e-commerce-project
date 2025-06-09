@@ -6,11 +6,8 @@ import React, { useEffect, useState } from 'react'
 const page = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
     const router = useRouter()
-
-
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,6 +20,11 @@ const page = () => {
 
             setEmail("");
             setPassword("");
+
+            // get user role 
+            const roleRes = await axios.get('http://localhost:8000/api/user',{ withCredentials: true})
+            const userRole = roleRes.data.user.role
+            console.log(userRole)
 
             // Now sync cart only after login success
             const localCart = JSON.parse(localStorage.getItem('ITEM'));
@@ -46,7 +48,8 @@ const page = () => {
                     console.error("Cart sync error:", cartErr.response?.data || cartErr);
                 }
             }
-            router.push('/home');
+                router.push(userRole === 'admin' ? '/admin' : '/home');
+            
             
         } catch (err) {
             if (err.response && err.response.data) {

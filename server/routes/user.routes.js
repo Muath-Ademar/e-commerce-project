@@ -15,7 +15,7 @@ module.exports = function(app){
         });
 });
     // Role specific route
-    app.get('/api/user-role', authenticate, UserController.getRole)
+    app.get('/api/user', authenticate, UserController.giveTheUserTheirInfo)
 
     // Admin specific 
     app.get('/api/users', authenticate, isAdmin ,UserController.getAllUsers);
