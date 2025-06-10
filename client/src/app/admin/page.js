@@ -6,16 +6,12 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 
 const page = () => {
     const [role, setRole] = useState(null)
-    const [isOpen, setIsOpen] = useState(false)
 
-    const openSideBar = ()=>{
-        setIsOpen(true)
-    }
         const getUserRole = async() =>{
         try {
-            const res = await axios.get('http://localhost:8000/api/user-role',{ withCredentials: true})
-            console.log(res.data.role)
-            setRole(res.data.role)
+            const res = await axios.get('http://localhost:8000/api/user',{ withCredentials: true})
+            console.log(res.data.user.role)
+            setRole(res.data.user.role)
         } catch (error) {
             console.log('error', error)
         }
