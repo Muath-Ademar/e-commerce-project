@@ -2,22 +2,23 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MailIcon from '@mui/icons-material/Mail';
 import LogoutOutlined from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import GroupIcon from '@mui/icons-material/Group';
 
 const AdminNavbar = () => {
   const [open, setOpen] = useState(false);
@@ -46,29 +47,70 @@ const AdminNavbar = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {['Dashboard','Orders', 'Manage Users'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
+          {/* Dashboard */}
+          <ListItem key={'Dashboard'} disablePadding>
+            <ListItemButton onClick={()=>router.push('/admin/dashboard')}>
               <ListItemIcon>
-                {index % 2 === 0 ? <DashboardIcon /> : <MailIcon />}
+                <DashboardIcon /> 
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={'Dashboard'} />
             </ListItemButton>
           </ListItem>
-        ))}
+          {/* Manage users */}
+          <ListItem key={'Manage users'} disablePadding>
+            <ListItemButton onClick={()=>router.push('/admin/users')}>
+              <ListItemIcon>
+                <GroupIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Manage users'} />
+            </ListItemButton>
+          </ListItem>
       </List>
-      <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
+      <Divider />
+
+
+          {/* All mail */}
+          <ListItem key={'All mail'} disablePadding>
+            <ListItemButton onClick={()=>router.push('/admin/mail')}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <MailIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={'All mail'} />
             </ListItemButton>
           </ListItem>
-        ))}
+        
+
+        {/* Products */}
+        <ListItem key={'Add products'} disablePadding>
+          <ListItemButton onClick={()=>router.push('/admin/products')}>
+            <ListItemIcon>
+              <InventoryIcon/>
+            </ListItemIcon>
+            <ListItemText primary={'Add products'}/>
+          </ListItemButton>
+        </ListItem>
+
+        {/* Orders */}
+        <ListItem key={'Orders'} disablePadding>
+          <ListItemButton onClick={()=>router.push('/admin/orders')}>
+            <ListItemIcon>
+              <ListAltIcon/>
+            </ListItemIcon>
+            <ListItemText primary={'Orders'}/>
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem key={'Trash'} disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <DeleteIcon/>
+            </ListItemIcon>
+            <ListItemText primary={'Trash'}/>
+          </ListItemButton>
+        </ListItem>
+
+        {/* Logout */}
         <ListItem key={'Logout'} disablePadding>
           <ListItemButton onClick={logout}>
             <ListItemIcon>
