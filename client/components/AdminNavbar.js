@@ -41,17 +41,18 @@ const AdminNavbar = () => {
 
   const drawerList = (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 250, height: '100%', backgroundColor:'#da2550' }}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
+      
     >
-      <List>
+      <List  sx={{color: "white"}}>
           {/* Dashboard */}
-          <ListItem key={'Dashboard'} disablePadding>
-            <ListItemButton onClick={()=>router.push('/admin/dashboard')}>
+          <ListItem  key={'Dashboard'} disablePadding>
+            <ListItemButton onClick={()=>router.push('/admin')}>
               <ListItemIcon>
-                <DashboardIcon /> 
+                <DashboardIcon sx={{color: 'white'}}/> 
               </ListItemIcon>
               <ListItemText primary={'Dashboard'} />
             </ListItemButton>
@@ -60,7 +61,7 @@ const AdminNavbar = () => {
           <ListItem key={'Manage users'} disablePadding>
             <ListItemButton onClick={()=>router.push('/admin/users')}>
               <ListItemIcon>
-                <GroupIcon />
+                <GroupIcon sx={{color: 'white'}} />
               </ListItemIcon>
               <ListItemText primary={'Manage users'} />
             </ListItemButton>
@@ -71,10 +72,10 @@ const AdminNavbar = () => {
 
 
           {/* All mail */}
-          <ListItem key={'All mail'} disablePadding>
+          <ListItem sx={{color: 'white'}} key={'All mail'} disablePadding>
             <ListItemButton onClick={()=>router.push('/admin/mail')}>
               <ListItemIcon>
-                <MailIcon />
+                <MailIcon sx={{color: 'white'}} />
               </ListItemIcon>
               <ListItemText primary={'All mail'} />
             </ListItemButton>
@@ -82,39 +83,39 @@ const AdminNavbar = () => {
         
 
         {/* Products */}
-        <ListItem key={'Add products'} disablePadding>
+        <ListItem sx={{color: 'white'}} key={'Add products'} disablePadding>
           <ListItemButton onClick={()=>router.push('/admin/products')}>
             <ListItemIcon>
-              <InventoryIcon/>
+              <InventoryIcon sx={{color: 'white'}}/>
             </ListItemIcon>
             <ListItemText primary={'Add products'}/>
           </ListItemButton>
         </ListItem>
 
         {/* Orders */}
-        <ListItem key={'Orders'} disablePadding>
+        <ListItem sx={{color: 'white'}} key={'Orders'} disablePadding>
           <ListItemButton onClick={()=>router.push('/admin/orders')}>
             <ListItemIcon>
-              <ListAltIcon/>
+              <ListAltIcon sx={{color: 'white'}}/>
             </ListItemIcon>
             <ListItemText primary={'Orders'}/>
           </ListItemButton>
         </ListItem>
 
-        <ListItem key={'Trash'} disablePadding>
+        <ListItem sx={{color: 'white'}} key={'Trash'} disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <DeleteIcon/>
+              <DeleteIcon sx={{color: 'white'}}/>
             </ListItemIcon>
             <ListItemText primary={'Trash'}/>
           </ListItemButton>
         </ListItem>
 
         {/* Logout */}
-        <ListItem key={'Logout'} disablePadding>
+        <ListItem sx={{color: 'white'}} key={'Logout'} disablePadding>
           <ListItemButton onClick={logout}>
             <ListItemIcon>
-              <LogoutOutlined />
+              <LogoutOutlined sx={{color: 'white'}} />
             </ListItemIcon>
             <ListItemText primary={'Logout'} />
           </ListItemButton>
@@ -124,7 +125,7 @@ const AdminNavbar = () => {
   );
 
   return (
-    <div>
+    <div  >
       {/* Menu button to open drawer */}
       <IconButton
         onClick={toggleDrawer(true)}
@@ -134,6 +135,7 @@ const AdminNavbar = () => {
       </IconButton>
 
       <SwipeableDrawer
+      
         anchor="left"
         open={open}
         onClose={toggleDrawer(false)}

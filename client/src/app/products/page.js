@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import List from '../../../components/List';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
-import FindInPageIcon from '@mui/icons-material/FindInPage';
+
 const page = () => {
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])

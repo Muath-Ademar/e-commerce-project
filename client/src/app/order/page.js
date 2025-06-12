@@ -47,7 +47,13 @@ const page = () => {
       }
       const res = await axios.post('http://localhost:8000/api/orders', payload, {withCredentials: true})
       alert('Order placed Successfully')
-      setForm('')
+      setForm({
+          fullName: '',
+          addressLine: '',
+          city: ''
+        })
+        setProducts([])
+        setTotal(0)
       localStorage.removeItem('ORDER_DATA')
       const deleteAll = await axios.delete('http://localhost:8000/api/cart/delete', {withCredentials: true})
 

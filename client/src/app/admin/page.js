@@ -30,6 +30,7 @@ const page = () => {
     
     <div className='flex'>
     <AdminNavbar/>
+    <h1>Dashboard</h1>
     </div>
   )
 }
