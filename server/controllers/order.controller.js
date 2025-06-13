@@ -63,13 +63,14 @@ module.exports.updateOrderForAdmin = async (req, res) => {
             const product = await Product.findById(productId)
             if (!product) return res.status(404).json({ msg: `Product with id: ${productId} not found` })
             if (product.stock < productQuantity) return res.status(400).json({ msg: `not enough stock for ${product.productName}` })
-            // but what if the admin by mistake changes the status to deliverd and paid? handle this the next time you log in
-            if (order.deliveryStatus === 'delivered' && order.paymentStatus === 'paid') {
+            if (order.deliveryStatus === 'delivered') {
+                order.paymentStatus = 'paid'
                 order.stockStatus = true
                 product.stock -= productQuantity
                 await product.save()
             }
-            else if (order.deliveryStatus !== 'delivered' && order.paymentStatus !== 'paid') {
+            else if (order.deliveryStatus !== 'delivered') {
+                order.paymentStatus = 'unpaid'
                 order.stockStatus = false
                 product.stock += productQuantity
                 await product.save()
@@ -133,6 +134,8 @@ module.exports.getSpecificOrder = (req, res) => {
 
 module.exports.getAllOrders = (req, res) => {
     Order.find({})
+        .populate('products.productId', 'productName Image price')
+        .exec()
         .then(orders => res.json(orders))
         .catch(err => res.json(err))
 }
