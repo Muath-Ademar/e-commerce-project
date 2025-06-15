@@ -14,5 +14,6 @@ require('./routes/user.routes')(app)
 require('./routes/product.routes')(app)
 require('./routes/order.routes')(app)
 require('./routes/cart.routes')(app)
+require('./routes/contact.routes')(app)
 
 app.listen(port, ()=> console.log(`Listening on port: ${port}`))

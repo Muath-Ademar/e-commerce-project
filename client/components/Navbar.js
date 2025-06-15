@@ -233,7 +233,7 @@ const Navbar = () => {
                 <div className='flex-1 flex items-center justify-center space-x-8'>
                     <Link href="#" className='text-sm hover:text-[#D99655] transition'>About</Link>
                     <Link href="/products" className='text-sm hover:text-[#D99655] transition'>Products</Link>
-                    <Link href="#" className='text-sm hover:text-[#D99655] transition'>Contact Us</Link>
+                    <Link href="/contactus" className='text-sm hover:text-[#D99655] transition'>Contact Us</Link>
                     {!userId &&
                         <button
                             onClick={() => setShowModal(true)}
