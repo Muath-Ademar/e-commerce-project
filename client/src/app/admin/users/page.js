@@ -2,10 +2,30 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Delete from '../../../../components/Delete'
+import AdminNavbar from '../../../../components/AdminNavbar'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
   const [users, setUsers] = useState([])
+  const [role, setRole] = useState(null)
+  const router = useRouter()
 
+    useEffect(() => {
+    const getUserRole = async () => {
+      try {
+        const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+        const userRole = res.data.user.role
+        setRole(userRole)
+        if (userRole !== 'admin') {
+          router.push('/home')
+        }
+      } catch (error) {
+        console.log('error', error)
+        router.push('/home')
+      }
+    }
+    getUserRole()
+  }, [router])
 
   
   
@@ -31,8 +51,13 @@ const page = () => {
       
     }
 
+    if(role !== 'admin'){
+      return null
+    }
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <AdminNavbar/>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">User Management</h1>
         

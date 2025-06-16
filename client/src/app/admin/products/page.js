@@ -1,6 +1,8 @@
 'use client'
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import AdminNavbar from '../../../../components/AdminNavbar'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
     const [productName, setProductName] = useState("")
@@ -11,22 +13,42 @@ const page = () => {
     const [price, setPrice] = useState(0)
     const [images, setImages] = useState("")
     const [stock, setStock] = useState(0)
+    const [role, setRole] = useState(null)
+    const router = useRouter()
+
+    useEffect(() => {
+        const getUserRole = async () => {
+            try {
+                const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+                const userRole = res.data.user.role
+                setRole(userRole)
+                if (userRole !== 'admin') {
+                    router.push('/home')
+                }
+            } catch (error) {
+                console.log('error', error)
+                router.push('/home')
+            }
+        }
+        getUserRole()
+    }, [router])
+
 
     const categories = ['Shoes', 'T-Shirts', 'Shorts', 'Hoodies', 'Tracksuits', 'Jackets', 'Sports Bras', 'Leggings', 'Socks', 'Accessories']
     const productData = {
         productName,
         description,
         category,
-        sizes : sizes.split(',').map(size => size.trim()).filter(Boolean),
+        sizes: sizes.split(',').map(size => size.trim()).filter(Boolean),
         colors: colors.split(',').map(color => color.trim()).filter(Boolean),
         price,
         images: images.split(',').map(img => img.trim()).filter(Boolean),
         stock
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:8000/api/products', productData, {withCredentials: true})
+        axios.post('http://localhost:8000/api/products', productData, { withCredentials: true })
             .then(res => {
                 console.log(res.data)
                 setProductName("")
@@ -41,8 +63,13 @@ const page = () => {
             })
             .catch(err => console.log(err))
     }
+
+    if (role !== 'admin') {
+        return null
+    }
     return (
         <div>
+            <AdminNavbar />
             <form onSubmit={handleSubmit} className="bg-white p-6  border-gray-100 mt-13" >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     {/* Row 1 */}
@@ -67,15 +94,15 @@ const page = () => {
                             placeholder="0.00"
                             step="0.01"
                             value={price}
-                            onChange={(e)=>setPrice(e.target.value)}
-                            />
+                            onChange={(e) => setPrice(e.target.value)}
+                        />
                     </div>
                     {/* Row 2 */}
                     <div className="space-y-2">
                         <label className="block text-sm font-medium text-gray-700">Category</label>
-                        <select value={category} onChange={(e)=> setCategory(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="">Select category</option>
-                            {categories.map((category, i) =>(
+                            {categories.map((category, i) => (
                                 <option key={i} value={category}>{category}</option>
                             ))}
                         </select>
@@ -87,7 +114,7 @@ const page = () => {
                             type="number"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value={stock}
-                            onChange={(e)=> setStock(e.target.value)}
+                            onChange={(e) => setStock(e.target.value)}
                         />
                     </div>
 
@@ -99,7 +126,7 @@ const page = () => {
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Enter Images separated by commas (e.g.: ImageUrl1, ImageUrl2, ImageUrl3)"
                             value={images}
-                            onChange={(e)=> setImages(e.target.value)}
+                            onChange={(e) => setImages(e.target.value)}
                         />
                     </div>
 
@@ -109,7 +136,7 @@ const page = () => {
                             type="text"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value={sizes}
-                            onChange={(e)=>setSizes(e.target.value)}
+                            onChange={(e) => setSizes(e.target.value)}
                             placeholder="Enter sizes separated by commas (e.g.: S, M, L)"
                         />
                     </div>
@@ -121,7 +148,7 @@ const page = () => {
                             type="text"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             value={colors}
-                            onChange={(e)=> setColors(e.target.value)}
+                            onChange={(e) => setColors(e.target.value)}
                             placeholder="Enter colors separated by commas (e.g.: red, black, blue)"
                         />
                     </div>
@@ -136,7 +163,7 @@ const page = () => {
                         rows="3"
                         placeholder="Product description..."
                         value={description}
-                        onChange={(e)=> setDescription(e.target.value)}
+                        onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                 </div>
 

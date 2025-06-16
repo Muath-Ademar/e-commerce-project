@@ -9,28 +9,32 @@ import BarChartIcon from '@mui/icons-material/BarChart'
 import EventIcon from '@mui/icons-material/Event'
 import AdminNavbar from '../../../components/AdminNavbar'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
     const [role, setRole] = useState(null)
+    const router = useRouter()
 
 
-    const getUserRole = async () => {
-        try {
-            const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
-            console.log(res.data.user.role)
-            setRole(res.data.user.role)
-        } catch (error) {
-            console.log('error', error)
-        }
-    }
     useEffect(() => {
-        getUserRole()
-    }, [])
-    if (role !== 'admin') {
+        const getUserRole = async () => {
+            try {
+                const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+                const userRole = res.data.user.role
+                setRole(userRole)
+                if(userRole !== 'admin'){
+                    router.push('/home')
+                }
+            } catch (error) {
+                console.log('error', error)
+                router.push('/home')
+            }
+        }
+            getUserRole()
+    }, [router])
 
-        return (
-            <h1>UnAuthorized</h1>
-        )
+    if(role!== 'admin'){
+        return null
     }
 
     // Placeholder Stats
@@ -50,8 +54,7 @@ const page = () => {
 
     return (
         <div className="flex bg-[#f9fafb] min-h-screen">
-            <AdminNavbar />
-
+            <AdminNavbar/>
             <main className="flex-1 px-10 py-8">
                 {/* Header */}
                 <Box display="flex" alignItems="center" gap={2} mb={6}>

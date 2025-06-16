@@ -1,9 +1,30 @@
 'use client'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import AdminNavbar from '../../../../components/AdminNavbar'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
   const [orders, setOrders] = useState([])
+  const [role, setRole] = useState(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    const getUserRole = async () => {
+      try {
+        const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+        const userRole = res.data.user.role
+        setRole(userRole)
+        if (userRole !== 'admin') {
+          router.push('/home')
+        }
+      } catch (error) {
+        console.log('error', error)
+        router.push('/home')
+      }
+    }
+    getUserRole()
+  }, [router])
 
 
 
@@ -36,10 +57,15 @@ const page = () => {
       .catch((err => console.log(err)))
   }, [])
 
+  if(role!=='admin'){
+    return null
+  }
+
 
 
   return (
     <div className="p-6 overflow-x-auto mt-9">
+      <AdminNavbar/>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Order Dashboard</h1>
         <div className="flex space-x-2">

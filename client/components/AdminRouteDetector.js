@@ -1,6 +1,5 @@
 'use client';
 import { usePathname } from 'next/navigation';
-import AdminNavbar from './AdminNavbar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -10,7 +9,7 @@ export default function AdminRouteDetector({children}) {
   const isAdmin = pathname?.startsWith('/admin');
   return(
     <>
-      {!isAdmin ?  <Navbar />: <AdminNavbar/>}
+      {!isAdmin ?  <Navbar />: ""}
         {children}
       {!isAdmin ? <Footer/>: ''}
     </>

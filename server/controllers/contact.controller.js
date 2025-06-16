@@ -15,3 +15,9 @@ module.exports.getAllMessages = (req, res) => {
         .then(messages => res.json(messages))
         .catch(err=> res.json(err))
 }
+
+module.exports.deleteAll = (req, res) =>{
+    Contact.deleteMany({})
+        .then(messages => res.json(messages))
+        .catch(err=> res.json(err))
+}
