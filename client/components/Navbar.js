@@ -311,7 +311,7 @@ const Navbar = () => {
                                 {productsInCart.length > 0 ? productsInCart.map((item, i) => (
                                     <li key={i} className="flex items-center gap-4 p-4 hover:bg-gray-50">
                                         <img
-                                            src={item.images?.[0] || 'https://via.placeholder.com/150'}
+                                            src={`http://localhost:8000/${item.images[0]}`}
                                             alt={item.productName}
                                             className="w-12 h-12 rounded-lg object-cover border border-gray-200"
                                         />

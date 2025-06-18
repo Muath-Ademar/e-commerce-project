@@ -78,7 +78,7 @@ const List = ({ products }) => {
                     className="relative group bg-white shadow-md rounded-xl overflow-hidden hover:scale-105 transition duration-300"
                 >
                     <Image
-                        src={product.images[0]}
+                        src={`http://localhost:8000/${product.images[0]}`}
                         alt={product.productName}
                         width={400}
                         height={400}

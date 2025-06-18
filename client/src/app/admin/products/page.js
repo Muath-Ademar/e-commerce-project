@@ -1,6 +1,6 @@
 'use client'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AdminNavbar from '../../../../components/AdminNavbar'
 import { useRouter } from 'next/navigation'
 
@@ -11,10 +11,11 @@ const page = () => {
     const [sizes, setSizes] = useState("")
     const [colors, setColors] = useState("")
     const [price, setPrice] = useState(0)
-    const [images, setImages] = useState("")
+    const [images, setImages] = useState(null)
     const [stock, setStock] = useState(0)
     const [role, setRole] = useState(null)
     const router = useRouter()
+    const fileInputRef = useRef() 
 
     useEffect(() => {
         const getUserRole = async () => {
@@ -35,20 +36,23 @@ const page = () => {
 
 
     const categories = ['Shoes', 'T-Shirts', 'Shorts', 'Hoodies', 'Tracksuits', 'Jackets', 'Sports Bras', 'Leggings', 'Socks', 'Accessories']
-    const productData = {
-        productName,
-        description,
-        category,
-        sizes: sizes.split(',').map(size => size.trim()).filter(Boolean),
-        colors: colors.split(',').map(color => color.trim()).filter(Boolean),
-        price,
-        images: images.split(',').map(img => img.trim()).filter(Boolean),
-        stock
-    }
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:8000/api/products', productData, { withCredentials: true })
+        const formData = new FormData()
+        formData.append('productName', productName)
+        formData.append('description', description)
+        formData.append('category', category)
+        formData.append('price', price)
+        formData.append('stock', stock)
+        formData.append('sizes', JSON.stringify(sizes.split(',').map(size => size.trim()).filter(Boolean)))
+        formData.append('colors', JSON.stringify(colors.split(',').map(color => color.trim()).filter(Boolean)))
+        for (let i = 0; i < images.length; i++) {
+        formData.append('images', images[i])
+    }
+
+        axios.post('http://localhost:8000/api/products', formData, { withCredentials: true, headers: {'Content-Type': 'multipart/form-data'} })
             .then(res => {
                 console.log(res.data)
                 setProductName("")
@@ -122,11 +126,13 @@ const page = () => {
                     <div className="space-y-2">
                         <label className="block text-sm font-medium text-gray-700">Images</label>
                         <input
-                            type="text"
+                            type="file"
+                            multiple ="multiple"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Enter Images separated by commas (e.g.: ImageUrl1, ImageUrl2, ImageUrl3)"
-                            value={images}
-                            onChange={(e) => setImages(e.target.value)}
+                            accept='image/*'
+                            onChange={(e) => setImages(e.target.files)}
+                            ref={fileInputRef}
                         />
                     </div>
 

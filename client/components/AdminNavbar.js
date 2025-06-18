@@ -101,7 +101,7 @@ const AdminNavbar = () => {
             <ListItemText primary={'Orders'}/>
           </ListItemButton>
         </ListItem>
-
+{/* add one for showing all the products */}
         <ListItem sx={{color: 'white'}} key={'Trash'} disablePadding>
           <ListItemButton>
             <ListItemIcon>
