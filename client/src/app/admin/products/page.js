@@ -1,6 +1,6 @@
 'use client'
 import axios from 'axios'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminNavbar from '../../../../components/AdminNavbar'
 import { useRouter } from 'next/navigation'
 
@@ -15,7 +15,6 @@ const page = () => {
     const [stock, setStock] = useState(0)
     const [role, setRole] = useState(null)
     const router = useRouter()
-    const fileInputRef = useRef() 
 
     useEffect(() => {
         const getUserRole = async () => {
@@ -124,15 +123,13 @@ const page = () => {
 
                     {/* Row 3 */}
                     <div className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-700">Images</label>
+                        <label className="block text-sm font-medium text-gray-700">Images (<small className="text-gray-500">Hold Ctrl (or ⌘ on Mac) to select multiple images</small>)</label>
                         <input
                             type="file"
                             multiple ="multiple"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter Images separated by commas (e.g.: ImageUrl1, ImageUrl2, ImageUrl3)"
                             accept='image/*'
-                            onChange={(e) => setImages(e.target.files)}
-                            ref={fileInputRef}
+                            onChange={(e) => setImages(Array.from(e.target.files))}
                         />
                     </div>
 

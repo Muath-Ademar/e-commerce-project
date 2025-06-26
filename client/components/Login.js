@@ -1,13 +1,14 @@
 "use client"
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
 
-const page = () => {
+import React, { useState } from 'react'
+
+const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
     const router = useRouter()
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,10 +17,11 @@ const page = () => {
             const res = await axios.post("http://localhost:8000/api/login", {
                 email,
                 password
-            }, { withCredentials: true });
+            }, {withCredentials: true});
 
             setEmail("");
             setPassword("");
+            onLoginSuccess()
 
             // get user role 
             const roleRes = await axios.get('http://localhost:8000/api/user',{ withCredentials: true})
@@ -84,8 +86,17 @@ const page = () => {
             <button type="submit" className="w-full bg-[#fe520a] text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-200">
                 Login
             </button>
+            <p className='text-center'>Don't have an account?
+                <button
+                    type="button"
+                    onClick={() => setShowLogin(false)}
+                    className='text-[#3a91f1]'
+                >
+                    Register
+                </button>
+            </p>
         </form>
     )
 }
 
-export default page
+export default Login

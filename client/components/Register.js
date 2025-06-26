@@ -1,8 +1,10 @@
 "use client"
 import axios from 'axios'
+import Link from 'next/link'
 import React, { useState } from 'react'
+import Login from './Login'
 
-const Register = ({ onClose, onLoginSuccess }) => {
+const Register = ({ onClose, onRegisterSuccess, showLogin, setShowLogin }) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -27,7 +29,7 @@ const Register = ({ onClose, onLoginSuccess }) => {
             setPassword('')
             setConfirmPassword("")
             onClose()
-            onLoginSuccess()
+            onRegisterSuccess()
 
             const localCart = JSON.parse(localStorage.getItem('ITEM'));
             if (localCart && Array.isArray(localCart) && localCart.length > 0) {
@@ -100,6 +102,8 @@ const Register = ({ onClose, onLoginSuccess }) => {
                 <button type="submit" className="w-full bg-[#fe520a] text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-200">
                     Register
                 </button>
+                <p className='text-center'>Already have an account? <button type='button' onClick={()=> setShowLogin(true)} className='text-[#3a91f1]' >Login</button></p>
+                
             </form>
         </div>
     )

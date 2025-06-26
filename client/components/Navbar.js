@@ -9,9 +9,11 @@ import { useRouter } from 'next/navigation';
 import { Person, SettingsInputComponent } from '@mui/icons-material';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import Login from './Login';
 
 
 const Navbar = () => {
+    const [showLogin, setShowLogin] = useState(false)
     const [showModal, setShowModal] = useState(false);
     const [openCart, setOpenCart] = useState(false)
     const [productsInCart, setProductsInCart] = useState([])
@@ -135,27 +137,32 @@ const Navbar = () => {
     }
     const goToOrder = () => {
         if (userId) {
-            const orderData = {
-                userId: userId,
-                products: productsInCart.map(item => ({
-                    productId: item._id,
-                    productQuantity: item.quantity,
-                    priceAtPurchase: item.price,
-                    productName: item.productName,  // for UI rendering
-                })),
-                shippingAddress: {
-                    fullName: '',
-                    addressLine: '',
-                    city: '',
-                },
-                total: total // for UI rendering
-            }
-            localStorage.setItem('ORDER_DATA', JSON.stringify(orderData))
-            router.push('/order')
+            if(productsInCart.length == 0){
+                alert('please add items to your cart before checkout')
+            } else {
 
-        }
-        else {
-            router.push('/login')
+                const orderData = {
+                    userId: userId,
+                    products: productsInCart.map(item => ({
+                        productId: item._id,
+                        productQuantity: item.quantity,
+                        priceAtPurchase: item.price,
+                        productName: item.productName,  // for UI rendering
+                    })),
+                    shippingAddress: {
+                        fullName: '',
+                        addressLine: '',
+                        city: '',
+                    },
+                    total: total // for UI rendering
+                }
+                localStorage.setItem('ORDER_DATA', JSON.stringify(orderData))
+                router.push('/order')
+            }
+
+        
+        } else {
+            setShowModal(true)
         }
     }
 
@@ -341,28 +348,51 @@ const Navbar = () => {
                     }
                 </div>
             </div>
-            {showModal && (
-                <div className="fixed inset-0 z-50">
-                    {/* Blur overlay (applies to the page behind) */}
-                    <div
-                        className="fixed inset-0 backdrop-blur-[4px]"
-                        onClick={() => setShowModal(false)} // Close modal when clicking backdrop
-                    ></div>
+{showModal ? (
+    <div className="fixed inset-0 z-50">
+        {/* Blur overlay (applies to the page behind) */}
+        <div
+            className="fixed inset-0 backdrop-blur-[4px]"
+            onClick={() => {
+                setShowModal(false);
+                setShowLogin(false);
+            }}
+        ></div>
 
-                    {/* Modal content */}
-                    <div className="fixed inset-0 flex justify-center items-center">
-                        <div className="bg-white  rounded-xl shadow-xl relative w-[28rem] max-w-xl">
-                            <button
-                                onClick={() => setShowModal(false)}
-                                className="absolute top-3 right-4 text-gray-500 hover:text-black text-xl font-bold"
-                            >
-                                &times;
-                            </button>
-                            <Register onClose={() => setShowModal(false)} onLoginSuccess={authUser} />
-                        </div>
-                    </div>
-                </div>
-            )}
+        {/* Modal content */}
+        <div className="fixed inset-0 flex justify-center items-center">
+            <div className="bg-white rounded-xl shadow-xl relative w-[28rem] h-[20rem] mb-50 max-w-xl">
+                <button
+                    onClick={() => {
+                        setShowModal(false);
+                        setShowLogin(false);
+                    }}
+                    className="absolute top-3 right-4 text-gray-500 hover:text-black text-xl font-bold"
+                >
+                    &times;
+                </button>
+                {showLogin ? (
+                    <Login 
+                        onLoginSuccess={() => {
+                            setShowModal(false);
+                            setShowLogin(false);
+                            authUser();
+                        }} 
+                        showLogin={showLogin}
+                        setShowLogin={setShowLogin}
+                    />
+                ) : (
+                    <Register 
+                        onClose={() => setShowModal(false)} 
+                        onRegisterSuccess={authUser} 
+                        showLogin={showLogin} 
+                        setShowLogin={setShowLogin} 
+                    />
+                )}
+            </div>
+        </div>
+    </div>
+) : null}
         </>
     );
 };
