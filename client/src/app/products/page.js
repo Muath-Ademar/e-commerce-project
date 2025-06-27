@@ -65,89 +65,112 @@ const page = () => {
             });
     }, [searchQuery])
     return (
-        <div className="bg-[#fffaf5] min-h-screen">
-            <div className="text-center py-12">
-                <h1 className="text-3xl font-bold text-gray-900">Our Products</h1>
-                <p className="mt-2 text-gray-600">Browse through our latest arrivals and top picks</p>
+    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white pb-16">
+        {/* Header with subtle texture */}
+        <div className="relative py-16 px-4 text-center overflow-hidden">
+            <div className="absolute inset-0 bg-[url('https://uploads-ssl.webflow.com/627a1044a798e6627445c8d1/627a1045a798e6e3a245c9d6_noise.png')] opacity-5"></div>
+            <div className="relative max-w-3xl mx-auto">
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+                    Curated Collection
+                </h1>
+                <p className="text-lg text-gray-600 font-light">
+                    Filter through our premium selection
+                </p>
             </div>
-            <form onSubmit={handleSubmit} className="flex flex-wrap items-end  gap-4 p-4 rounded-lg">
-                {/* Category */}
-                <div className="flex-1 min-w-[120px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                    <select
-                        value={category}
-                        onChange={e => setCategory(e.target.value)}
-                        className="w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#fe520a]"
-                    >
-                        <option value="">Select</option>
-                        {categories.map((category, i) => (
-                            <option key={i} value={category}>{category}</option>
-                        ))}
-                    </select>
-                </div>
+        </div>
 
-                {/* Color */}
-                <div className="flex-1 min-w-[120px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Color</label>
-                    <input
-                        type="text"
-                        className="w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#fe520a]"
-                        placeholder="Color"
-                        value={colors}
-                        onChange={e => setColors(e.target.value)}
-                    />
-                </div>
+        {/* Floating filter card */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+            <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 backdrop-blur-sm">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                    {/* Category */}
+                    <div className="space-y-1">
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</label>
+                        <select
+                            value={category}
+                            onChange={e => setCategory(e.target.value)}
+                            className="w-full px-4 py-3 text-sm border-0 bg-gray-50 rounded-xl focus:ring-2 focus:ring-orange-200 focus:bg-white transition-all"
+                        >
+                            <option value="">All</option>
+                            {categories.map((category, i) => (
+                                <option key={i} value={category}>{category}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                {/* Sizes */}
-                <div className="flex-1 min-w-[120px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Sizes</label>
-                    <input
-                        type="text"
-                        className="w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#fe520a]"
-                        placeholder="Sizes"
-                        value={sizes}
-                        onChange={e => setSizes(e.target.value)}
-                    />
-                </div>
+                    {/* Color */}
+                    <div className="space-y-1">
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Color</label>
+                        <input
+                            type="text"
+                            className="w-full px-4 py-3 text-sm border-0 bg-gray-50 rounded-xl focus:ring-2 focus:ring-orange-200 focus:bg-white transition-all"
+                            placeholder="Any"
+                            value={colors}
+                            onChange={e => setColors(e.target.value)}
+                        />
+                    </div>
 
-                {/* Min Price */}
-                <div className="flex-1 min-w-[120px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Min Price</label>
-                    <input
-                        type="number"
-                        className="w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#fe520a]"
-                        placeholder="Min"
-                        value={minPrice}
-                        onChange={e => setMinPrice(e.target.value)}
-                    />
-                </div>
+                    {/* Sizes */}
+                    <div className="space-y-1">
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Size</label>
+                        <input
+                            type="text"
+                            className="w-full px-4 py-3 text-sm border-0 bg-gray-50 rounded-xl focus:ring-2 focus:ring-orange-200 focus:bg-white transition-all"
+                            placeholder="Any"
+                            value={sizes}
+                            onChange={e => setSizes(e.target.value)}
+                        />
+                    </div>
 
-                {/* Max Price */}
-                <div className="flex-1 min-w-[120px]">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Max Price</label>
-                    <input
-                        type="number"
-                        className="w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#fe520a]"
-                        placeholder="Max"
-                        value={maxPrice}
-                        onChange={e => setMaxPrice(e.target.value)}
-                    />
-                </div>
+                    {/* Min Price */}
+                    <div className="space-y-1">
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Min Price</label>
+                        <div className="relative">
+                            <input
+                                type="number"
+                                className="w-full pl-10 pr-4 py-3 text-sm border-0 bg-gray-50 rounded-xl focus:ring-2 focus:ring-orange-200 focus:bg-white transition-all"
+                                placeholder="$0"
+                                value={minPrice}
+                                onChange={e => setMinPrice(e.target.value)}
+                            />
+                            <span className="absolute left-3 top-3 text-gray-400">$</span>
+                        </div>
+                    </div>
 
-                {/* Submit Button */}
-                <div className="flex-1 min-w-[110px]">
-                    <button
-                        type="submit"
-                        className="w-full bg-[#fe520a] text-white py-2 px-4 rounded-md hover:bg-orange-600 transition-colors text-sm font-medium"
-                    >
-                        Filter
-                    </button>
+                    {/* Max Price */}
+                    <div className="space-y-1">
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Max Price</label>
+                        <div className="relative">
+                            <input
+                                type="number"
+                                className="w-full pl-10 pr-4 py-3 text-sm border-0 bg-gray-50 rounded-xl focus:ring-2 focus:ring-orange-200 focus:bg-white transition-all"
+                                placeholder="$∞"
+                                value={maxPrice}
+                                onChange={e => setMaxPrice(e.target.value)}
+                            />
+                            <span className="absolute left-3 top-3 text-gray-400">$</span>
+                        </div>
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="flex items-end">
+                        <button
+                            type="submit"
+                            className="w-full px-6 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-xl shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
+                        >
+                            Filter
+                        </button>
+                    </div>
                 </div>
             </form>
+        </div>
 
+        {/* Products List */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <List products={filteredProducts.length > 0 ? filteredProducts : products} />
         </div>
-    )
+    </div>
+)
 }
 
 export default page

@@ -3,40 +3,40 @@ const { Product } = require('../models/product.model')
 
 module.exports.createProduct = async (req, res) => {
     try {
-        const { productName, category, sizes, colors, price, description, stock } = req.body;
-        const imagePaths = req.files?.map(file =>
-            file.path.replace(/\\/g, '/')
-        );
+        const { productName, category, price, sizes, colors, description, stock } = req.body;
+        
 
-        let sizesArray = []
-        let colorsArray = []
+        
+        const imagePaths = req.files?.map(file => file.path.replace(/\\/g, '/'));
 
-        try {
-            sizesArray = JSON.parse(sizes);
-            colorsArray = JSON.parse(colors)
-        } catch (error) {
-            return res.status(400).json({ msg: "Sizes and colors must be valid JSON arrays " })
-        }
         if (!productName ||
             !category ||
-            !Array.isArray(sizesArray) || sizesArray.length === 0 ||
-            !Array.isArray(colorsArray) || colorsArray.length === 0 ||
+            !Array.isArray(sizes) || sizes.length === 0 ||
+            !Array.isArray(colors) || colors.length === 0 ||
             !price ||
             !imagePaths || imagePaths.length === 0 ||
             !description ||
-            !stock) {
-            return res.status(400).json({ msg: "All fields are required" })
+            !stock
+        ) {
+            return res.status(400).json({ msg: "All fields are required" });
         }
 
         const newProduct = await Product.create({
-            productName, category, sizes, colors, price, images: imagePaths, description, stock
-        })
-        res.status(201).json({ msg: "Product created successfully", product: newProduct })
-    } catch (error) {
-        res.status(500).json({ msg: "Error creating product", error: error.message })
-    }
-}
+            productName, 
+            category, 
+            sizes, 
+            colors, 
+            price, 
+            images: imagePaths, 
+            description, 
+            stock
+        });
 
+        res.status(201).json({ msg: "Product created successfully", product: newProduct });
+    } catch (error) {
+        res.status(500).json({ msg: "Error creating product", error: error.message });
+    }
+};
 module.exports.getAllProducts = (req, res) => {
     Product.find({})
         .then(products => {

@@ -45,8 +45,13 @@ const page = () => {
         formData.append('category', category)
         formData.append('price', price)
         formData.append('stock', stock)
-        formData.append('sizes', JSON.stringify(sizes.split(',').map(size => size.trim()).filter(Boolean)))
-        formData.append('colors', JSON.stringify(colors.split(',').map(color => color.trim()).filter(Boolean)))
+    // Convert comma-separated strings into arrays (no JSON.stringify)
+    const sizesArray = sizes.split(',').map(size => size.trim()).filter(Boolean);
+    const colorsArray = colors.split(',').map(color => color.trim()).filter(Boolean);
+    
+    // Append as arrays (FormData will handle them)
+    sizesArray.forEach(size => formData.append('sizes', size));
+    colorsArray.forEach(color => formData.append('colors', color));
         for (let i = 0; i < images.length; i++) {
         formData.append('images', images[i])
     }
