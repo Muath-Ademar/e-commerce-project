@@ -62,7 +62,7 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
                     errorMessages[key] = errorsObject[key].message;
                 }
 
-                setErrors(errorMessages);
+
             } else {
                 console.error("Unexpected error:", err);
             }

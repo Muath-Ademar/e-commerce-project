@@ -41,7 +41,9 @@ const page = () => {
         products: products.map(item => ({
           productId: item.productId,
           productQuantity: item.productQuantity,
-          priceAtPurchase: item.priceAtPurchase
+          priceAtPurchase: item.priceAtPurchase,
+          color: item.color,
+          size: item.size
         })),
         shippingAddress: form
       }
@@ -52,6 +54,7 @@ const page = () => {
           addressLine: '',
           city: ''
         })
+        console.log(res.data)
         setProducts([])
         setTotal(0)
       localStorage.removeItem('ORDER_DATA')
@@ -111,6 +114,9 @@ const page = () => {
                 <p className="text-sm font-medium">{item.productName}</p>
                 <p className="text-xs text-gray-500">Quantity: {item.productQuantity}</p>
                 <p className="text-xs text-gray-500">Price: {item.priceAtPurchase}</p>
+                <p className="text-xs text-gray-500">Color: {item.color}</p>
+                <p className="text-xs text-gray-500">Size: {item.size}</p>
+
               </div>
             </li>
             

@@ -12,10 +12,12 @@ module.exports.createOrder = async (req, res) => {
         let orderProducts = []
 
         for (let item of products) {
-            const { productId, productQuantity } = item
+            const { productId, productQuantity, size, color } = item
             if (!productQuantity || productQuantity < 1) {
                 return res.status(400).json({ msg: 'Invalid quantity for product.' });
             }
+            if(!size) return res.status(400).json({msg: "Invalid size for product."})
+            if(!color) return res.status(400).json({msg: "Invalid color for product."})
 
             const product = await Product.findById(productId)
             if (!product) return res.status(404).json({ msg: `Product with id: ${productId} not found` })
@@ -28,7 +30,9 @@ module.exports.createOrder = async (req, res) => {
             orderProducts.push({
                 productId,
                 productQuantity,
-                priceAtPurchase
+                priceAtPurchase,
+                size,
+                color
             })
 
         }

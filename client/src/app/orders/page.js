@@ -83,6 +83,8 @@ const page = () => {
                             <div>
                               <p className="font-medium text-gray-800">{product.productId.productName}</p>
                               <p className="text-sm text-gray-500">Qty: {product.productQuantity}</p>
+                              <p className="text-sm text-gray-500">Size: {product.size}</p>
+                              <p className="text-sm text-gray-500">Color: {product.color}</p>
                             </div>
                           </div>
                           <p className="font-medium text-gray-900">

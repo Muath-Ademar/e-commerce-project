@@ -9,6 +9,8 @@ const Page = () => {
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedColor, setSelectedColor] = useState('')
   const [selectedSize, setSelectedSize] = useState('')
+  const [quantity, setQuantity] = useState(1)
+  const [cart, setCart] = useState([])
   const { id } = useParams()
 
   useEffect(() => {
@@ -20,11 +22,70 @@ const Page = () => {
       .catch(err => console.error(err))
   }, [id])
 
+      const handleQuantityChange = ( value) => {
+        setQuantity(Number(value))
+    }
+    const handleColorChange = (value) => {
+      setSelectedColor(String(value))
+    }
+    const handleSizeChange = (value) => {
+      setSelectedSize(String(value))
+      }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('Selected Color:', selectedColor)
-    console.log('Selected Size:', selectedSize)
+    addToCart(product)
   }
+
+  const addToCart = async (product) => {
+
+        try {
+            const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+            const user = res.data.user;
+            console.log(user.id)
+
+            if (user) {
+                const payload = {
+
+                    items: [
+                        {
+                            productId: product._id,
+                            quantity,
+                            size: selectedSize,
+                            color: selectedColor
+                        }
+                    ]
+                };
+
+                const response = await axios.post('http://localhost:8000/api/cart/add', payload, { withCredentials: true });
+                setCart(response.data)
+                console.log('Cart response:', response.data);
+            } else {
+                throw new Error('User not authenticated');
+            }
+        } catch (error) {
+            console.warn('Fallback to guest cart', error.message);
+
+            const storedItems = localStorage.getItem('ITEM');
+            const productsInCart = storedItems ? JSON.parse(storedItems) : [];
+            const existingProduct = productsInCart.find(p => p._id === product._id);
+
+            let updatedCart;
+
+            if (existingProduct) {
+                updatedCart = productsInCart.map(p =>
+                    p._id === product._id ? { ...p, quantity: p.quantity + quantity } : p
+                );
+            } else {
+                updatedCart = [...productsInCart, { ...product, quantity }];
+            }
+
+            localStorage.setItem('ITEM', JSON.stringify(updatedCart));
+            setCart(updatedCart)
+        }
+
+        window.dispatchEvent(new Event('cart-updated'));
+    };
 
   if (!product) return (
     <div className="text-center mt-20 text-xl text-gray-500">
@@ -46,9 +107,8 @@ const Page = () => {
                 alt={`Thumbnail ${index + 1}`}
                 width={80}
                 height={80}
-                className={`w-20 h-20 object-cover rounded-md cursor-pointer border ${
-                  selectedImage === index ? 'border-orange-500' : 'border-gray-300'
-                }`}
+                className={`w-20 h-20 object-cover rounded-md cursor-pointer border ${selectedImage === index ? 'border-orange-500' : 'border-gray-300'
+                  }`}
                 onClick={() => setSelectedImage(index)}
               />
             ))}
@@ -78,9 +138,6 @@ const Page = () => {
             )}
           </div>
 
-          <div className="text-sm text-gray-500">
-            30-day satisfaction guarantee or your money back.
-          </div>
 
           <div className="mt-6">
             <h4 className="uppercase text-xs text-gray-400 font-medium mb-2">Description</h4>
@@ -95,7 +152,7 @@ const Page = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Color</label>
                 <select
                   value={selectedColor}
-                  onChange={(e) => setSelectedColor(e.target.value)}
+                  onChange={(e) => handleColorChange( e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                   required
                 >
@@ -113,7 +170,7 @@ const Page = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Size</label>
                 <select
                   value={selectedSize}
-                  onChange={(e) => setSelectedSize(e.target.value)}
+                  onChange={(e) => handleSizeChange(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                   required
                 >
@@ -124,6 +181,18 @@ const Page = () => {
                 </select>
               </div>
             )}
+            {/* Quantity Input */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+              <input
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={(e) => handleQuantityChange(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                required
+              />
+            </div>
 
             <button
               type="submit"

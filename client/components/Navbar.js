@@ -108,9 +108,12 @@ const Navbar = () => {
                         productName: item.productName,
                         price: item.price,
                         images: item.images,
-                        quantity: item.quantity
+                        quantity: item.quantity,
+                        size: item.size,
+                        color: item.color //make sure to double check this, if there is an error it could be from here
                     }))
                     : [];
+                console.log(items)
 
                 setProductsInCart(items);
             } catch (error) {
@@ -137,7 +140,7 @@ const Navbar = () => {
     }
     const goToOrder = () => {
         if (userId) {
-            if(productsInCart.length == 0){
+            if (productsInCart.length == 0) {
                 alert('please add items to your cart before checkout')
             } else {
 
@@ -147,6 +150,8 @@ const Navbar = () => {
                         productId: item._id,
                         productQuantity: item.quantity,
                         priceAtPurchase: item.price,
+                        size: item.size,
+                        color: item.color, // check this again to see how to make it work
                         productName: item.productName,  // for UI rendering
                     })),
                     shippingAddress: {
@@ -160,7 +165,7 @@ const Navbar = () => {
                 router.push('/order')
             }
 
-        
+
         } else {
             setShowModal(true)
         }
@@ -184,6 +189,10 @@ const Navbar = () => {
 
         if (isAuthenticated) {
             try {
+                if (!id) {
+                    console.error('Product ID is undefined, cannot delete.');
+                    return;
+                }
                 const deleteRes = await axios.delete(`http://localhost:8000/api/cart/remove/${id}`, { withCredentials: true });
                 console.log('Delete response:', deleteRes.status);
             } catch (error) {
@@ -324,7 +333,7 @@ const Navbar = () => {
                                         />
                                         <div className="flex-1">
                                             <div className="text-sm font-medium text-gray-800">{item.productName}</div>
-                                            <div className="text-xs text-gray-500">Quantity: {item.quantity}</div>
+                                            <div className="text-xs text-gray-500">Quantity: {item.quantity}<br />Size: {item.size} <br /> Color: {item.color}</div>
                                         </div>
                                         <div className="text-sm font-semibold text-gray-700">${Number(item.price || 0).toFixed(2)}</div>
                                         <XCircleIcon width={25} height={25} onClick={() => removeItemsfromLocalStorage(item._id)} className='hover:cursor-pointer' />
@@ -348,51 +357,51 @@ const Navbar = () => {
                     }
                 </div>
             </div>
-{showModal ? (
-    <div className="fixed inset-0 z-50">
-        {/* Blur overlay (applies to the page behind) */}
-        <div
-            className="fixed inset-0 backdrop-blur-[4px]"
-            onClick={() => {
-                setShowModal(false);
-                setShowLogin(false);
-            }}
-        ></div>
-
-        {/* Modal content */}
-        <div className="fixed inset-0 flex justify-center items-center">
-            <div className="bg-white rounded-xl shadow-xl relative w-[28rem] h-[20rem] mb-50 max-w-xl">
-                <button
-                    onClick={() => {
-                        setShowModal(false);
-                        setShowLogin(false);
-                    }}
-                    className="absolute top-3 right-4 text-gray-500 hover:text-black text-xl font-bold"
-                >
-                    &times;
-                </button>
-                {showLogin ? (
-                    <Login 
-                        onLoginSuccess={() => {
+            {showModal ? (
+                <div className="fixed inset-0 z-50">
+                    {/* Blur overlay (applies to the page behind) */}
+                    <div
+                        className="fixed inset-0 backdrop-blur-[4px]"
+                        onClick={() => {
                             setShowModal(false);
                             setShowLogin(false);
-                            authUser();
-                        }} 
-                        showLogin={showLogin}
-                        setShowLogin={setShowLogin}
-                    />
-                ) : (
-                    <Register 
-                        onClose={() => setShowModal(false)} 
-                        onRegisterSuccess={authUser} 
-                        showLogin={showLogin} 
-                        setShowLogin={setShowLogin} 
-                    />
-                )}
-            </div>
-        </div>
-    </div>
-) : null}
+                        }}
+                    ></div>
+
+                    {/* Modal content */}
+                    <div className="fixed inset-0 flex justify-center items-center">
+                        <div className="bg-white rounded-xl shadow-xl relative w-[28rem] h-[20rem] mb-50 max-w-xl">
+                            <button
+                                onClick={() => {
+                                    setShowModal(false);
+                                    setShowLogin(false);
+                                }}
+                                className="absolute top-3 right-4 text-gray-500 hover:text-black text-xl font-bold"
+                            >
+                                &times;
+                            </button>
+                            {showLogin ? (
+                                <Login
+                                    onLoginSuccess={() => {
+                                        setShowModal(false);
+                                        setShowLogin(false);
+                                        authUser();
+                                    }}
+                                    showLogin={showLogin}
+                                    setShowLogin={setShowLogin}
+                                />
+                            ) : (
+                                <Register
+                                    onClose={() => setShowModal(false)}
+                                    onRegisterSuccess={authUser}
+                                    showLogin={showLogin}
+                                    setShowLogin={setShowLogin}
+                                />
+                            )}
+                        </div>
+                    </div>
+                </div>
+            ) : null}
         </>
     );
 };

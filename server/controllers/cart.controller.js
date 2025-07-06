@@ -11,11 +11,14 @@ module.exports.addToCart = async (req, res) => {
         let productList = [];
 
         for (let item of items) {
-            const { productId, quantity } = item;
+            const { productId, quantity, size, color } = item;
 
             if (!quantity || quantity < 1) {
                 return res.status(400).json({ msg: 'Invalid quantity for product.' });
             }
+            if(!size) return res.status(400).json({ msg: 'Invalid size for product.' });
+            if(!color) return res.status(400).json({ msg: 'Invalid color for product.' });
+
 
             const product = await Product.findById(productId);
             if (!product)
@@ -24,7 +27,7 @@ module.exports.addToCart = async (req, res) => {
             if (product.stock < quantity)
                 return res.status(400).json({ msg: `Not enough stock for ${product.productName}` });
 
-            productList.push({ productId, quantity });
+            productList.push({ productId, quantity, size, color });
         }
 
         // ✅ Check if cart already exists
@@ -141,7 +144,9 @@ module.exports.getUserCart = async (req, res) => {
                 productName: product.productName,
                 price: product.price,
                 images: product.images,
-                quantity: item.quantity
+                quantity: item.quantity,
+                color: item.color,
+                size: item.size
             }
         })
 

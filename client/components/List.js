@@ -2,12 +2,15 @@
 import axios from 'axios'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const List = ({ products }) => {
     const router = useRouter()
     const [quantities, setQuantites] = useState({})
+    const [selectedColor, setSelectedColor] = useState({})
+    const [selectedSize, setSelectedSize] = useState({})
     const [cart, setCart] = useState([]) // Add cart state
+
 
     const handleQuantityChange = (productId, value) => {
         setQuantites(prev => ({
@@ -15,55 +18,69 @@ const List = ({ products }) => {
             [productId]: Number(value)
         }))
     }
-
-    const addtoCart = async (product) => {
-    const quantity = quantities[product._id] || 1;
-
-    try {
-        const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
-        const user = res.data.user;
-        console.log(user.id)
-
-        if (user) {
-            const payload = {
-                
-                items: [
-                    {
-                        productId: product._id,
-                        quantity
-                    }
-                ]
-            };
-
-            const response = await axios.post('http://localhost:8000/api/cart/add', payload, { withCredentials: true });
-            setCart(response.data);
-            console.log('Cart response:', response.data);
-        } else {
-            throw new Error('User not authenticated');
-        }
-    } catch (error) {
-        console.warn('Fallback to guest cart', error.message);
-
-        const storedItems = localStorage.getItem('ITEM');
-        const productsInCart = storedItems ? JSON.parse(storedItems) : [];
-        const existingProduct = productsInCart.find(p => p._id === product._id);
-
-        let updatedCart;
-
-        if (existingProduct) {
-            updatedCart = productsInCart.map(p =>
-                p._id === product._id ? { ...p, quantity: p.quantity + quantity } : p
-            );
-        } else {
-            updatedCart = [...productsInCart, { ...product, quantity }];
-        }
-
-        localStorage.setItem('ITEM', JSON.stringify(updatedCart));
-        setCart(updatedCart);
+    const handleColorChange = (productId, value) => {
+        setSelectedColor(prev => ({
+            ...prev,
+            [productId]: String(value)
+        }))
+    }
+    const handleSizeChange = (productId, value) => {
+        setSelectedSize(prev => ({
+            ...prev,
+            [productId]: String(value)
+        }))
     }
 
-    window.dispatchEvent(new Event('cart-updated'));
-};
+    const addtoCart = async (product) => {
+        const quantity = quantities[product._id] || 1;
+
+        try {
+            const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+            const user = res.data.user;
+            console.log(user.id)
+
+            if (user) {
+                const payload = {
+
+                    items: [
+                        {
+                            productId: product._id,
+                            quantity,
+                            size: selectedSize[product._id],
+                            color: selectedColor[product._id]
+                        }
+                    ]
+                };
+
+                const response = await axios.post('http://localhost:8000/api/cart/add', payload, { withCredentials: true });
+                setCart(response.data);
+                console.log('Cart response:', response.data);
+            } else {
+                throw new Error('User not authenticated');
+            }
+        } catch (error) {
+            console.warn('Fallback to guest cart', error.message);
+
+            const storedItems = localStorage.getItem('ITEM');
+            const productsInCart = storedItems ? JSON.parse(storedItems) : [];
+            const existingProduct = productsInCart.find(p => p._id === product._id);
+
+            let updatedCart;
+
+            if (existingProduct) {
+                updatedCart = productsInCart.map(p =>
+                    p._id === product._id ? { ...p, quantity: p.quantity + quantity } : p
+                );
+            } else {
+                updatedCart = [...productsInCart, { ...product, quantity }];
+            }
+
+            localStorage.setItem('ITEM', JSON.stringify(updatedCart));
+            setCart(updatedCart);
+        }
+
+        window.dispatchEvent(new Event('cart-updated'));
+    };
 
 
 
@@ -87,8 +104,26 @@ const List = ({ products }) => {
 
                     {/* Hover Details Overlay */}
                     <div className="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-center text-white p-4">
-                        <p className="text-sm mb-1">Sizes: {product.sizes.join(', ')}</p>
-                        <p className="text-sm mb-1">Colors: {product.colors.join(', ')}</p>
+                        <label className="text-sm mb-1 block">
+                            Size:
+                            <select onChange={(e)=> handleSizeChange(product._id, e.target.value)} className="border rounded px-2 py-1 mt-1 w-full">
+                                <option>Select size</option>
+                                {product.sizes.map((size, i) => (
+                                    <option key={i} value={size}>{size}</option>
+                                ))}
+                            </select>
+                        </label>
+
+                        <label className="text-sm mb-1 block">
+                            Color:
+                            <select onChange={(e)=> handleColorChange(product._id, e.target.value)} className="border rounded px-2 py-1 mt-1 w-full">
+                                <option>Select color</option>
+                                {product.colors.map((color, i) => (
+                                    <option key={i} value={color}>{color}</option>
+                                ))}
+                            </select>
+                        </label>
+
                         <p className="text-sm mb-3">In Stock: {product.stock}</p>
                         <button onClick={() => router.push(`/products/${product._id}`)} className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-4 py-2 rounded">
                             View Details

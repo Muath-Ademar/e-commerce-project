@@ -23,6 +23,16 @@ const OrderSchema = new mongoose.Schema({
             priceAtPurchase: {
                 type: Number,
                 required: true
+            },
+
+            color: {
+                type: String,
+                required: true
+            },
+
+            size: {
+                type: String,
+                required: true
             }
             
         }
