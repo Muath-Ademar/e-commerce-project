@@ -68,7 +68,7 @@ const Navbar = () => {
         axios.get('http://localhost:8000/api/logout', { withCredentials: true })
             .then(res => {
                 setUserId(null)
-                router.push('/home')
+                router.push('/')
             })
             .catch(err => console.log(err))
     }
@@ -246,7 +246,7 @@ const Navbar = () => {
         <>
             <div className='bg-white shadow-sm px-8 py-4 flex items-center justify-between text-black'>
 
-                <div className='text-xl font-bold tracking-wide'><Link href={'/home'}>Home</Link></div>
+                <div className='text-xl font-bold tracking-wide'><Link href={'/'}>Home</Link></div>
                 <div className='flex-1 flex items-center justify-center space-x-8'>
                     <Link href="#" className='text-sm hover:text-[#D99655] transition'>About</Link>
                     <Link href="/products" className='text-sm hover:text-[#D99655] transition'>Products</Link>

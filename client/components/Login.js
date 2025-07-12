@@ -50,7 +50,7 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
                     console.error("Cart sync error:", cartErr.response?.data || cartErr);
                 }
             }
-                router.push(userRole === 'admin' ? '/admin' : '/home');
+                router.push(userRole === 'admin' ? '/admin' : '/');
             
             
         } catch (err) {
