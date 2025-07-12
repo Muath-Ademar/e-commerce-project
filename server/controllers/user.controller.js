@@ -12,8 +12,13 @@ module.exports.register = async(req, res) => {
 
     const newUser =  await User.create(req.body)
         
-    const userToken = jwt.sign({id: newUser._id}, process.env.SECRET_KEY);        
-    res.cookie("userToken", userToken, {httpOnly: true})
+    const userToken = jwt.sign({id: newUser._id}, process.env.SECRET_KEY, {expiresIn:"7d"});        
+    res.cookie("userToken", userToken, {
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        sameSite: "strict", //prevent csrf attacks
+        secure: process.env.NODE_ENV === "production" 
+    })
     res.json({msg: "success!", user: newUser})
     } catch (err){
         res.status(400).json(err)
@@ -34,10 +39,13 @@ module.exports.login = async(req, res) =>{
     }
     const userToken = jwt.sign({
         id: user._id
-    }, process.env.SECRET_KEY);
+    }, process.env.SECRET_KEY, {expiresIn: '7d'});
 
     res.cookie("userToken", userToken, {
-        httpOnly: true
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        sameSite: "strict", //prevent csrf attacks
+        secure: process.env.NODE_ENV === "production" 
     })
     .json({msg: "success!"});
 }
