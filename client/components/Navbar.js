@@ -10,6 +10,7 @@ import { Person, SettingsInputComponent } from '@mui/icons-material';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Login from './Login';
+import NameAndEmail from './NameAndEmail';
 
 
 const Navbar = () => {
@@ -273,8 +274,7 @@ const Navbar = () => {
                                     {/* User Profile */}
                                     <div className="px-4 py-3 border-b border-gray-100 flex items-center space-x-3">
                                         <div>
-                                            <p className="font-medium text-gray-900">{firstName} {lastName}</p>
-                                            <p className="text-xs text-gray-500">{email}</p>
+                                            <NameAndEmail firstName={firstName} lastName={lastName} email={email}/>
                                         </div>
                                         <XCircleIcon width={25} height={25} onClick={handleProfileClose} className='hover:cursor-pointer' />
                                     </div>
@@ -385,7 +385,9 @@ const Navbar = () => {
                                     onLoginSuccess={() => {
                                         setShowModal(false);
                                         setShowLogin(false);
+                                        setOpenProfile(false)
                                         authUser();
+                                        getUser() ; {/*you need to call the get user method again here for it to fetch the new user info, other wise it wont work untill you refresh */}
                                     }}
                                     showLogin={showLogin}
                                     setShowLogin={setShowLogin}
@@ -393,9 +395,14 @@ const Navbar = () => {
                             ) : (
                                 <Register
                                     onClose={() => setShowModal(false)}
-                                    onRegisterSuccess={authUser}
+                                    onRegisterSuccess={()=> {
+                                        setOpenProfile(false);
+                                        authUser();
+                                        getUser() ; {/*you need to call the get user method again here for it to fetch the new user info, other wise it wont work untill you refresh */}
+                                    }}
                                     showLogin={showLogin}
                                     setShowLogin={setShowLogin}
+                                    
                                 />
                             )}
                         </div>
