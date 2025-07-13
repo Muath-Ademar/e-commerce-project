@@ -30,12 +30,13 @@ module.exports.register = async(req, res) => {
 module.exports.login = async(req, res) =>{
     const user = await User.findOne({ email: req.body.email});
     if(user === null){
-        return res.sendStatus(400)
+        return res.status(400).json({msg: "Invalid email or password" }
+        )
     }
 
     const correctPassword = await bcrypt.compare(req.body.password, user.password)
     if(!correctPassword) {
-        return res.sendStatus(400)
+        return res.status(400).json({msg: "Invalid email or password" })
     }
     const userToken = jwt.sign({
         id: user._id

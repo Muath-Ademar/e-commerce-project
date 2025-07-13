@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react'
 const page = () => {
   const [orders, setOrders] = useState([])
 
-// i dont know if there is a need for the order to remain in the data base  after a user has recived it? should it be removed completly from everwhere? or should it remain?
 
   const deleteOrder = (orderId) => {
     axios.delete(`http://localhost:8000/api/orders/delete/${orderId}`, { withCredentials: true })

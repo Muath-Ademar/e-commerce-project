@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState("")
     const router = useRouter()
 
 
@@ -17,26 +18,27 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
             const res = await axios.post("http://localhost:8000/api/login", {
                 email,
                 password
-            }, {withCredentials: true});
+            }, { withCredentials: true });
 
             setEmail("");
             setPassword("");
-            onLoginSuccess()
+            setError("")
+            onLoginSuccess();
 
             // get user role 
-            const roleRes = await axios.get('http://localhost:8000/api/user',{ withCredentials: true})
+            const roleRes = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
             const userRole = roleRes.data.user.role
             console.log(userRole)
 
             // Now sync cart only after login success
             const localCart = JSON.parse(localStorage.getItem('ITEM'));
-            
+
             if (localCart && Array.isArray(localCart) && localCart.length > 0) {
                 const items = localCart.map(item => ({
                     productId: item._id,
                     quantity: item.quantity
                 }));
-                
+
                 try {
                     const cartRes = await axios.post(
                         'http://localhost:8000/api/cart/add',
@@ -50,17 +52,12 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
                     console.error("Cart sync error:", cartErr.response?.data || cartErr);
                 }
             }
-                router.push(userRole === 'admin' ? '/admin' : '/');
-            
-            
-        } catch (err) {
-            if (err.response && err.response.data) {
-                const errorsObject = err.response.data.errors || {};
-                const errorMessages = {};
+            router.push(userRole === 'admin' ? '/admin' : '/');
 
-                for (let key of Object.keys(errorsObject)) {
-                    errorMessages[key] = errorsObject[key].message;
-                }
+
+        } catch (err) {
+            if (err.response && err.response.data && err.response.data.msg) {
+                setError(err.response.data.msg)
 
 
             } else {
@@ -68,25 +65,41 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
             }
         }
     }
-
     return (
         <form className="max-w-md mx-auto bg-white p-6 rounded-2xl shadow-md space-y-4" onSubmit={handleSubmit}>
             <h2 className="text-2xl font-semibold text-gray-700 text-center">Login</h2>
 
+            {error && (
+                <p className="text-red-600 text-center">{error}</p>
+            )}
+
             <div>
                 <label className="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black border-[#ededed] " />
+                <input
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black border-[#ededed]"
+                />
             </div>
 
             <div>
                 <label className="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black border-[#ededed]" />
+                <input
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 text-black border-[#ededed]"
+                />
             </div>
 
             <button type="submit" className="w-full bg-[#fe520a] text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition duration-200">
                 Login
             </button>
-            <p className='text-center'>Don't have an account?
+
+            <p className='text-center'>Don't have an account?{' '}
                 <button
                     type="button"
                     onClick={() => setShowLogin(false)}

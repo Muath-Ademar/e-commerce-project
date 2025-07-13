@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link';
 
 export default function Home() {
 return (
@@ -16,10 +17,12 @@ return (
                     </h1>
 
                     <div className='flex justify-center mt-18'>
+                         <Link href={'/products'} >
                         <button className='flex items-center gap-2 bg-[#D99655] text-white px-6 py-2 rounded-md hover:bg-[#c67d3b] transition'>
                             SHOP NOW
                             <ArrowRightIcon className='w-5 h-5' />
                         </button>
+                        </Link>
                     </div>
                 </div>
                 <div className='flex justify-center gap-20 mt-20'>
@@ -101,9 +104,11 @@ return (
                     ))}
                 </div>
                 <div className='flex justify-center mt-5'>
+                        <Link href={'/products'}>
                     <button className='text-[#D99655] border border-[#D99655] px-6 py-2 w-48 hover:bg-[#D99655] hover:text-white transition'>
                         View More
                     </button>
+                        </Link>
                 </div>
             </div>
             <div className="w-full border-b border-b-[#504C48]-500 my-4"></div>
@@ -144,9 +149,11 @@ return (
                     ))}
                 </div>
                 <div className='flex justify-center mt-5'>
+                        <Link href={'/products'}>
                     <button className='text-[#D99655] border border-[#D99655] px-6 py-2 w-48 hover:bg-[#D99655] hover:text-white transition'>
                         View More
                     </button>
+                        </Link>
                 </div>
             </div>
 
@@ -169,10 +176,12 @@ return (
                             Spend minimal $100 get 30% off voucher code for your next purchase
                         </p>
                     </div>
+                    <Link href={'/products'} >
                     <button className='flex items-center gap-2 bg-[#D99655] text-white px-6 py-2 rounded-md hover:bg-[#c67d3b] transition'>
                         SHOP NOW
                         <ArrowRightIcon className='w-5 h-5' />
                     </button>
+                    </Link>
                 </div>
                 <div className='flex justify-center space-x-8 mt-25 items-end'>
                     <div className='bg-[#F5F3F6] h-60 w-40 flex items-center justify-center transform transition duration-300 hover:rotate-6'>
