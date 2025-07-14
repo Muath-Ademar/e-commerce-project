@@ -7,14 +7,15 @@ module.exports.createProduct = async (req, res) => {
         
 
         
-        const imagePaths = req.files?.map(file => file.path.replace(/\\/g, '/'));
+        const imagePaths = Array.isArray(req.files) ? req.files.map(file => file.path.replace(/\\/g, '/')) : [];
+
 
         if (!productName ||
             !category ||
             !Array.isArray(sizes) || sizes.length === 0 ||
             !Array.isArray(colors) || colors.length === 0 ||
             !price ||
-            !imagePaths || imagePaths.length === 0 ||
+            imagePaths.length === 0 ||
             !description ||
             !stock
         ) {

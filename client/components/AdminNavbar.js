@@ -34,7 +34,7 @@ const AdminNavbar = () => {
   const logout = () => {
     axios.get('http://localhost:8000/api/logout', { withCredentials: true })
       .then(res => {
-        router.push('/home');
+        router.push('/');
       })
       .catch(err => console.log(err));
   };

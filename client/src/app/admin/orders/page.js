@@ -16,11 +16,11 @@ const page = () => {
         const userRole = res.data.user.role
         setRole(userRole)
         if (userRole !== 'admin') {
-          router.push('/home')
+          router.push('/')
         }
       } catch (error) {
         console.log('error', error)
-        router.push('/home')
+        router.push('/')
       }
     }
     getUserRole()
