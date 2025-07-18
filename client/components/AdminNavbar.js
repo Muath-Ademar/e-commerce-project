@@ -83,6 +83,14 @@ const AdminNavbar = () => {
         
 
         {/* Products */}
+        <ListItem sx={{color: 'white'}} key={'All products'} disablePadding>
+          <ListItemButton onClick={()=>router.push('/admin/products/list')}>
+            <ListItemIcon>
+              <InventoryIcon sx={{color: 'white'}}/>
+            </ListItemIcon>
+            <ListItemText primary={'All products'}/>
+          </ListItemButton>
+        </ListItem>
         <ListItem sx={{color: 'white'}} key={'Add products'} disablePadding>
           <ListItemButton onClick={()=>router.push('/admin/products')}>
             <ListItemIcon>

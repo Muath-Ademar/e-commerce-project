@@ -10,15 +10,8 @@ module.exports.createProduct = async (req, res) => {
         const imagePaths = Array.isArray(req.files) ? req.files.map(file => file.path.replace(/\\/g, '/')) : [];
 
 
-        if (!productName ||
-            !category ||
-            !Array.isArray(sizes) || sizes.length === 0 ||
-            !Array.isArray(colors) || colors.length === 0 ||
-            !price ||
-            imagePaths.length === 0 ||
-            !description ||
-            !stock
-        ) {
+        if(!productName || !category || !price || sizes.length == 0 || colors.length == 0 || !description || !stock || imagePaths.length ==0)
+        {
             return res.status(400).json({ msg: "All fields are required" });
         }
 
