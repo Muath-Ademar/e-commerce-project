@@ -148,7 +148,7 @@ module.exports.getAllOrdersForOneUser = async (req, res) => {
     const userId = req.user.id
     try {
         const AllUserOrders = await Order.find({ userId: userId })
-        .populate('products.productId', 'productName image price')
+        .populate('products.productId', 'productName images price')
         .exec();
         if (AllUserOrders.length === 0) {
             return res.status(404).json({ msg: `This user does not have any orders` })
