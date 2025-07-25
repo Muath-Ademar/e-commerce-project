@@ -15,6 +15,8 @@ import SearchBar from './SearchBar';
 
 
 const Navbar = () => {
+        console.log('Environment Variables:', process.env);
+    console.log('API Base URL:', process.env.NEXT_PUBLIC_API_BASE);
     const [showLogin, setShowLogin] = useState(false)
     const [showModal, setShowModal] = useState(false);
     const [openCart, setOpenCart] = useState(false)
@@ -92,6 +94,8 @@ const Navbar = () => {
     useEffect(() => {
         authUser()
         getUser()
+        console.log('API base URL:', process.env.DB);
+
     }, [])
 
 
