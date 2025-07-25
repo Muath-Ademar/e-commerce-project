@@ -99,7 +99,7 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
                 Login
             </button>
 
-            <p className='text-center'>Don't have an account?{' '}
+            <p className='text-center'>Don&apos;t have an account?{' '}
                 <button
                     type="button"
                     onClick={() => setShowLogin(false)}
