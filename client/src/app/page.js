@@ -138,7 +138,9 @@ return (
                     ].map((item, index) => (
                         <div key={index} className='text-center'>
                             <div className='h-130 w-100 overflow-hidden'>
-                                <img
+                                <Image
+                                    width={500}
+                                    height={500}
                                     src={item.src}
                                     alt={item.category}
                                     className='w-full h-full object-fill hover:scale-110 transition-transform duration-300'

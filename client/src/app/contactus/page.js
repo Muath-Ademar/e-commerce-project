@@ -32,7 +32,7 @@ const Page = () => {
       <div className="hero-section">
         <div className="hero-content">
           <h1 className="hero-title">Contact Us</h1>
-          <p className="hero-subtitle">We're here to help and answer any questions you might have.</p>
+          <p className="hero-subtitle">We&apos;re here to help and answer any questions you might have.</p>
         </div>
       </div>
 
@@ -43,7 +43,7 @@ const Page = () => {
           <div className="contact-form-container">
             <form className="contact-form" onSubmit={handleSubmit}>
               <h2 className="form-title">Send Us a Message</h2>
-              <p className="form-subtitle">We'll get back to you within 24 hours</p>
+              <p className="form-subtitle">We&apos;ll get back to you within 24 hours</p>
 
               <div className="form-group">
                 <label htmlFor="name">Your Name</label>

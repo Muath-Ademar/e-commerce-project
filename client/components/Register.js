@@ -1,8 +1,6 @@
-"use client"
+'use client'
 import axios from 'axios'
-import Link from 'next/link'
 import React, { useState } from 'react'
-import Login from './Login'
 
 const Register = ({ onClose, onRegisterSuccess, showLogin, setShowLogin }) => {
     const [firstName, setFirstName] = useState('')
