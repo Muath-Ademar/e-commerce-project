@@ -48,7 +48,7 @@ module.exports.login = async(req, res) =>{
         httpOnly: true,
         sameSite: "None", 
         secure: process.env.NODE_ENV === "production" ,
-        domain: 'https://back-end-rork.onrender.com'
+        domain: 'back-end-rork.onrender.com'
     })
     .json({msg: "success!"});
 }
