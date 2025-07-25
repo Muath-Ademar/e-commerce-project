@@ -53,7 +53,7 @@ const page = () => {
     ]
 
     return (
-        <div className="flex bg-[#f9fafb] min-h-screen">
+        <div className="flex min-h-screen ml-20">
             <AdminNavbar/>
             <main className="flex-1 px-10 py-8">
                 {/* Header */}

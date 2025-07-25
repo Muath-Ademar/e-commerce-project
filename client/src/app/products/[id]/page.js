@@ -94,7 +94,7 @@ const Page = () => {
   )
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="max-w-7xl mx-auto px-4 py-12 mb-17">
       <div className="flex flex-col md:flex-row gap-10">
         {/* Left: Image Gallery */}
         <div className="md:flex md:w-2/3 gap-6">
@@ -131,7 +131,7 @@ const Page = () => {
         <div className="md:w-1/3 space-y-6">
           <h1 className="text-3xl font-semibold text-gray-800">{product.productName}</h1>
 
-          <div className="text-2xl font-bold text-blue-700">
+          <div className="text-2xl font-bold text-[#ff6400]">
             ${product.price}
             {product.originalPrice && (
               <span className="ml-3 text-gray-400 line-through text-lg">${product.originalPrice}</span>
@@ -153,7 +153,7 @@ const Page = () => {
                 <select
                   value={selectedColor}
                   onChange={(e) => handleColorChange( e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#ff6400] focus:border-[#ff6400] text-sm"
                   required
                 >
                   <option value="" disabled>Select a color</option>
@@ -171,7 +171,7 @@ const Page = () => {
                 <select
                   value={selectedSize}
                   onChange={(e) => handleSizeChange(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#ff6400] focus:border-[#ff6400] text-sm"
                   required
                 >
                   <option value="" disabled>Select a size</option>
@@ -189,14 +189,14 @@ const Page = () => {
                 min="1"
                 value={quantity}
                 onChange={(e) => handleQuantityChange(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#ff6400] focus:border-[#ff6400] text-sm"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-medium"
+              className="w-full bg-[#ff6400] hover:bg-orange-700 text-white py-3 rounded-md font-medium"
             >
               Add to Cart
             </button>

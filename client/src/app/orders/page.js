@@ -1,5 +1,6 @@
 'use client'
 import axios from 'axios'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 const page = () => {
@@ -75,9 +76,7 @@ const page = () => {
                         <div key={i} className="flex justify-between">
                           <div className="flex items-center">
                             <div className="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center mr-3">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                              </svg>
+                              <Image alt={product.productId.productName} height={40} width={40} src={`http://localhost:8000/${product.productId.images[0]}`}   />
                             </div>
                             <div>
                               <p className="font-medium text-gray-800">{product.productId.productName}</p>

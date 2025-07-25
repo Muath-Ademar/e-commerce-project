@@ -87,7 +87,7 @@ const page = () => {
     return (
         <div>
             <AdminNavbar />
-            <form onSubmit={handleSubmit} className="bg-white p-6  border-gray-100 mt-13" >
+            <form onSubmit={handleSubmit} className="bg-white p-6  border-gray-100 mt-13 ml-20" >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     {/* Row 1 */}
                     <div className="space-y-2">
@@ -201,7 +201,7 @@ const page = () => {
                 </div>
             </form>
             {errors.general && (
-                <p className="text-sm text-red-600 ml-0.5">{errors.general}</p>
+                <p className="text-sm text-red-600 ml-26">{errors.general}</p>
             )}
         </div>
     )

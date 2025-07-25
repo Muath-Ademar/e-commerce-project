@@ -64,7 +64,7 @@ const page = () => {
 
 
   return (
-    <div className="p-6 overflow-x-auto mt-9">
+    <div className="p-6 overflow-x-auto mt-9 ml-20">
       <AdminNavbar/>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Order Dashboard</h1>

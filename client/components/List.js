@@ -100,7 +100,7 @@ const List = ({ products }) => {
                             alt={product.productName}
                             width={400}
                             height={400}
-                            className="object-cover w-full h-64 transition-transform duration-500 group-hover:scale-105"
+                            className="object-cover w-full h-64 "
                         />
                         {product.stock <= 0 && (
                             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
