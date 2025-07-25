@@ -18,7 +18,7 @@ function ProductsContent ({searchQuery}) {
     const categories = ['Shoes', 'T-Shirts', 'Shorts', 'Hoodies', 'Tracksuits', 'Jackets', 'Sports Bras', 'Leggings', 'Socks', 'Accessories']
     useEffect(() => {
         const endpoint = searchQuery ? `products/search?key=${searchQuery}` : 'products'
-        axios.get(`http://localhost:8000/api/${endpoint}`)
+        axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/${endpoint}`)
             .then(res => {
                 console.log(res.data)
                 if (Array.isArray(res.data)) {
@@ -41,7 +41,7 @@ function ProductsContent ({searchQuery}) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.get('http://localhost:8000/api/products/filter', { params: { category, colors, sizes, minPrice, maxPrice } })
+        axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/products/filter`, { params: { category, colors, sizes, minPrice, maxPrice } })
             .then(res => {
                 console.log(res.data)
                 setFilteredProducts(res.data)

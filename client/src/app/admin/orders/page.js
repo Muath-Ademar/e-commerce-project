@@ -12,7 +12,7 @@ const Page = () => {
   useEffect(() => {
     const getUserRole = async () => {
       try {
-        const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, { withCredentials: true })
         const userRole = res.data.user.role
         setRole(userRole)
         if (userRole !== 'admin') {
@@ -30,7 +30,7 @@ const Page = () => {
 
   const changeDeliveryStatus = async (orderId, newStatus) => {
     try {
-      const res = await axios.patch(`http://localhost:8000/api/orders/${orderId}/admin/update`, { deliveryStatus: newStatus }, { withCredentials: true })
+      const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE}/api/orders/${orderId}/admin/update`, { deliveryStatus: newStatus }, { withCredentials: true })
       console.log(res.data)
       setOrders(orders.map(order =>
         order._id === orderId ?{
@@ -49,7 +49,7 @@ const Page = () => {
 
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/orders', { withCredentials: true })
+    axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/orders`, { withCredentials: true })
       .then((res => {
         console.log(res.data)
         setOrders(res.data)

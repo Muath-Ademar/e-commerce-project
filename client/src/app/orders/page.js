@@ -8,7 +8,7 @@ const Page = () => {
 
 
   const deleteOrder = (orderId) => {
-    axios.delete(`http://localhost:8000/api/orders/delete/${orderId}`, { withCredentials: true })
+    axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/api/orders/delete/${orderId}`, { withCredentials: true })
       .then(res => {
         console.log(res.data)
         setOrders(orders.filter(order => order._id != orderId))
@@ -17,7 +17,7 @@ const Page = () => {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/orders/user', { withCredentials: true })
+    axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/orders/user`, { withCredentials: true })
       .then(res => {
         setOrders(res.data.orders)
 
@@ -76,7 +76,7 @@ const Page = () => {
                         <div key={i} className="flex justify-between">
                           <div className="flex items-center">
                             <div className="bg-gray-100 rounded-md w-10 h-10 flex items-center justify-center mr-3">
-                              <Image alt={product.productId.productName} height={40} width={40} src={`http://localhost:8000/${product.productId.images[0]}`}   />
+                              <Image alt={product.productId.productName} height={40} width={40} src={`${process.env.NEXT_PUBLIC_API_BASE}/${product.productId.images[0]}`}   />
                             </div>
                             <div>
                               <p className="font-medium text-gray-800">{product.productId.productName}</p>

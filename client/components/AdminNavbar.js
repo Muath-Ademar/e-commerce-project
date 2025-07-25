@@ -32,7 +32,7 @@ const AdminNavbar = () => {
   };
 
   const logout = () => {
-    axios.get('http://localhost:8000/api/logout', { withCredentials: true })
+    axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/logout`, { withCredentials: true })
       .then(res => {
         router.push('/');
       })

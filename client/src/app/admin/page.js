@@ -19,7 +19,7 @@ const Page = () => {
     useEffect(() => {
         const getUserRole = async () => {
             try {
-                const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, { withCredentials: true })
                 const userRole = res.data.user.role
                 setRole(userRole)
                 if(userRole !== 'admin'){

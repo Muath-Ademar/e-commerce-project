@@ -15,7 +15,7 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
         e.preventDefault();
 
         try {
-            const res = await axios.post("http://localhost:8000/api/login", {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE}/api/login`, {
                 email,
                 password
             }, { withCredentials: true });
@@ -26,7 +26,7 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
             onLoginSuccess();
 
             // get user role 
-            const roleRes = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+            const roleRes = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, { withCredentials: true })
             const userRole = roleRes.data.user.role
             console.log(userRole)
 
@@ -41,7 +41,7 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
 
                 try {
                     const cartRes = await axios.post(
-                        'http://localhost:8000/api/cart/add',
+                        `${process.env.NEXT_PUBLIC_API_BASE}/api/cart/add`,
                         { items },
                         { withCredentials: true }
                     );

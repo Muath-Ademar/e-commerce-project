@@ -56,7 +56,7 @@ const Navbar = () => {
 
     const getUser = async () => {
         try {
-            const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, { withCredentials: true })
             setFirstName(res.data.user.firstName)
             setLastName(res.data.user.lastName)
             setEmail(res.data.user.email)
@@ -67,7 +67,7 @@ const Navbar = () => {
     }
 
     const logout = () => {
-        axios.get('http://localhost:8000/api/logout', { withCredentials: true })
+        axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/logout`, { withCredentials: true })
             .then(res => {
                 setUserId(null)
                 router.push('/')
@@ -80,7 +80,7 @@ const Navbar = () => {
     const authUser = async () => {
         try {
 
-            const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth`, { withCredentials: true });
             const user = res.data.user.id
             setUserId(user)
 
@@ -100,10 +100,10 @@ const Navbar = () => {
     useEffect(() => {
         const loadCart = async () => {
             try {
-                const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth`, { withCredentials: true });
                 const user = res.data.user;
 
-                const cartRes = await axios.get(`http://localhost:8000/api/cart/${user.id}`, { withCredentials: true });
+                const cartRes = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/cart/${user.id}`, { withCredentials: true });
 
                 const items = Array.isArray(cartRes.data.cart.items)
                     ? cartRes.data.cart.items.map(item => ({
@@ -181,7 +181,7 @@ const Navbar = () => {
         let isAuthenticated = false;
 
         try {
-            const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth`, { withCredentials: true });
             isAuthenticated = !!res.data.user;
         } catch (error) {
             // Log and proceed as guest
@@ -196,7 +196,7 @@ const Navbar = () => {
                     console.error('Product ID is undefined, cannot delete.');
                     return;
                 }
-                const deleteRes = await axios.delete(`http://localhost:8000/api/cart/remove/${id}`, { withCredentials: true });
+                const deleteRes = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/api/cart/remove/${id}`, { withCredentials: true });
                 console.log('Delete response:', deleteRes.status);
             } catch (error) {
                 console.error('Failed to delete from server:', error);
@@ -329,7 +329,7 @@ const Navbar = () => {
                                 {productsInCart.length > 0 ? productsInCart.map((item, i) => (
                                     <li key={i} className="flex items-center gap-4 p-4 hover:bg-gray-50">
                                         <img
-                                            src={`http://localhost:8000/${item.images[0]}`}
+                                            src={`${process.env.NEXT_PUBLIC_API_BASE}/${item.images[0]}`}
                                             alt={item.productName}
                                             className="w-12 h-12 rounded-lg object-cover border border-gray-200"
                                         />

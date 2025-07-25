@@ -8,7 +8,7 @@ const Page = () => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/products')
+    axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/products`)
       .then(res => {
         setProducts(res.data)
       })
@@ -16,7 +16,7 @@ const Page = () => {
   })
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8000/api/products/${id}`, {withCredentials: true})
+    axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/api/products/${id}`, {withCredentials: true})
     .then(res =>{
       console.log(res.data)
       setProducts(prev => prev.filter(product => product.id !== id))
@@ -45,7 +45,7 @@ return (
               products.map((product, i) => (
                 <tr key={i} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap flex items-center gap-3">
-                    <Image src={`http://localhost:8000/${product.images[0]}`} alt={product.productName} width={40} height={40} className="rounded" />
+                    <Image src={`${process.env.NEXT_PUBLIC_API_BASE}/${product.images[0]}`} alt={product.productName} width={40} height={40} className="rounded" />
                     <span className="text-sm font-medium text-gray-800">{product.productName}</span>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">${product.price}</td>

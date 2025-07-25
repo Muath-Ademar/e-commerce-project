@@ -13,7 +13,7 @@ const Register = ({ onClose, onRegisterSuccess, showLogin, setShowLogin }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post("http://localhost:8000/api/register", {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE}/api/register`, {
                 firstName,
                 lastName,
                 email,
@@ -39,7 +39,7 @@ const Register = ({ onClose, onRegisterSuccess, showLogin, setShowLogin }) => {
 
                 try {
                     const cartRes = await axios.post(
-                        'http://localhost:8000/api/cart/add', {
+                        `${process.env.NEXT_PUBLIC_API_BASE}/api/cart/add`, {
                         items
                     },
                         { withCredentials: true }

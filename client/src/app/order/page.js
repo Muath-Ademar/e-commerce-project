@@ -47,7 +47,7 @@ const Page = () => {
         })),
         shippingAddress: form
       }
-      const res = await axios.post('http://localhost:8000/api/orders', payload, {withCredentials: true})
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE}/api/orders`, payload, {withCredentials: true})
       alert('Order placed Successfully')
       setForm({
           fullName: '',
@@ -58,7 +58,7 @@ const Page = () => {
         setProducts([])
         setTotal(0)
       localStorage.removeItem('ORDER_DATA')
-      const deleteAll = await axios.delete('http://localhost:8000/api/cart/delete', {withCredentials: true})
+      const deleteAll = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/api/cart/delete`, {withCredentials: true})
 
     } catch (error) {
       console.error('Order failed:', error.response?.data || error.message);
