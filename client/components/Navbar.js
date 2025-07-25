@@ -11,6 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Login from './Login';
 import NameAndEmail from './NameAndEmail';
 import dynamic from 'next/dynamic';
+import SearchBar from './SearchBar';
 
 
 const Navbar = () => {
@@ -27,14 +28,6 @@ const Navbar = () => {
     const cartRef = useRef(null);
     const profileRef = useRef(null);
 
-
-const SearchBar = dynamic(
-  () => import('./SearchBar'), 
-  { 
-    ssr: false,
-    loading: () => <div className="w-64 h-10 bg-gray-100 rounded-full animate-pulse"></div>
-  }
-);
 
     const useOutsideClick = (ref, callback) => {
         useEffect(() => {
