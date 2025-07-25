@@ -36,7 +36,7 @@ const List = ({ products }) => {
         const quantity = quantities[product._id] || 1;
 
         try {
-            const res = await axios.get('http://localhost:8000/api/auth', { withCredentials: true });
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth`, { withCredentials: true });
             const user = res.data.user;
             console.log(user.id)
 
@@ -53,7 +53,7 @@ const List = ({ products }) => {
                     ]
                 };
 
-                const response = await axios.post('http://localhost:8000/api/cart/add', payload, { withCredentials: true });
+                const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE}`, payload, { withCredentials: true });
                 setCart(response.data);
                 console.log('Cart response:', response.data);
             } else {

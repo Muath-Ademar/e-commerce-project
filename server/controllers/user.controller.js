@@ -16,7 +16,7 @@ module.exports.register = async(req, res) => {
     res.cookie("userToken", userToken, {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: "strict", //prevent csrf attacks
+        sameSite: "None", //prevent csrf attacks
         secure: process.env.NODE_ENV === "production" 
     })
     res.json({msg: "success!", user: newUser})
@@ -45,7 +45,7 @@ module.exports.login = async(req, res) =>{
     res.cookie("userToken", userToken, {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: "strict", //prevent csrf attacks
+        sameSite: "None", //prevent csrf attacks
         secure: process.env.NODE_ENV === "production" 
     })
     .json({msg: "success!"});
