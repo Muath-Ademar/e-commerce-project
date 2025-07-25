@@ -3,7 +3,7 @@ import axios from 'axios'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
-const page = () => {
+const Page = () => {
   const [orders, setOrders] = useState([])
 
 
@@ -113,4 +113,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

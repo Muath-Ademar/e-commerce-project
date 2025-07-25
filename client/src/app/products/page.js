@@ -4,7 +4,7 @@ import List from '../../../components/List';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 
-const page = () => {
+const Page = () => {
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
     const [productsInCart, setProductsInCart] = useState([])
@@ -173,4 +173,4 @@ const page = () => {
 )
 }
 
-export default page
+export default Page

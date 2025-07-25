@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import AdminNavbar from '../../../../components/AdminNavbar'
 import { useRouter } from 'next/navigation'
 
-const page = () => {
+const Page = () => {
   const [orders, setOrders] = useState([])
   const [role, setRole] = useState(null)
   const router = useRouter()
@@ -177,4 +177,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

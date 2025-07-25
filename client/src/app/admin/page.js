@@ -11,7 +11,7 @@ import AdminNavbar from '../../../components/AdminNavbar'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
-const page = () => {
+const Page = () => {
     const [role, setRole] = useState(null)
     const router = useRouter()
 
@@ -169,4 +169,4 @@ const page = () => {
         </div>
     )
 }
-export default page
+export default Page
