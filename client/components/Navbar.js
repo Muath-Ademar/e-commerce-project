@@ -94,7 +94,6 @@ const Navbar = () => {
     useEffect(() => {
         authUser()
         getUser()
-        console.log('API base URL:', process.env.DB);
 
     }, [])
 
