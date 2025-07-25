@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link';
-import React, { Suspense, useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState } from 'react';
 import { CreditCardIcon, ShoppingCartIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import Register from './Register';
 import axios from 'axios';
@@ -269,9 +269,7 @@ const SearchBar = dynamic(
                         </button>
                     }
                     <div className='relative ml-4'>
-                        <Suspense fallback={<div className="w-64 h-10 bg-gray-100 rounded-full animate-pulse"></div>}>
                                 <SearchBar />
-                        </Suspense>
                     </div>
                 </div>
                 {userId &&
