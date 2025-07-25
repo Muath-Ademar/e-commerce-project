@@ -269,7 +269,7 @@ const SearchBar = dynamic(
                         </button>
                     }
                     <div className='relative ml-4'>
-                        <Suspense>
+                        <Suspense fallback={<div className="w-64 h-10 bg-gray-100 rounded-full animate-pulse"></div>}>
                                 <SearchBar />
                         </Suspense>
                     </div>
