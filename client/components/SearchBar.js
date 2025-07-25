@@ -3,9 +3,9 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-const SearchBar = () => {
+const SearchBar = ({initialQuery=''}) => {
   const router = useRouter()
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(initialQuery)
   const [isOpen, setIsOpen] = useState(false)
   const [searchedProducts, setSearchedProducts] = useState([])
   const handleResultClick = (id) =>{

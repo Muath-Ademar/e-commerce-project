@@ -1,9 +1,8 @@
 'use client'
 import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { CreditCardIcon, ShoppingCartIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import Register from './Register';
-import SearchBar from './SearchBar';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Person, SettingsInputComponent } from '@mui/icons-material';
@@ -11,6 +10,7 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Login from './Login';
 import NameAndEmail from './NameAndEmail';
+import dynamic from 'next/dynamic';
 
 
 const Navbar = () => {
@@ -26,6 +26,15 @@ const Navbar = () => {
     const router = useRouter()
     const cartRef = useRef(null);
     const profileRef = useRef(null);
+
+
+const SearchBar = dynamic(
+  () => import('./SearchBar'), 
+  { 
+    ssr: false,
+    loading: () => <div className="w-64 h-10 bg-gray-100 rounded-full animate-pulse"></div>
+  }
+);
 
     const useOutsideClick = (ref, callback) => {
         useEffect(() => {
@@ -260,7 +269,9 @@ const Navbar = () => {
                         </button>
                     }
                     <div className='relative ml-4'>
-                        <SearchBar />
+                        <Suspense>
+                                <SearchBar />
+                        </Suspense>
                     </div>
                 </div>
                 {userId &&
