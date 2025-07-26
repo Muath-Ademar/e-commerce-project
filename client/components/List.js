@@ -55,7 +55,6 @@ const List = ({ products }) => {
 
                 const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE}/api/cart/add`, payload, { withCredentials: true });
                 setCart(response.data);
-                console.log('Cart response:', response.data);
             } else {
                 throw new Error('User not authenticated');
             }

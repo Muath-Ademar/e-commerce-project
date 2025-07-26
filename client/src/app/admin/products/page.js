@@ -64,7 +64,6 @@ const Page = () => {
 
         axios.post(`${process.env.NEXT_PUBLIC_API_BASE}/api/products`, formData, { withCredentials: true, headers: { 'Content-Type': 'multipart/form-data' } })
             .then(res => {
-                console.log(res.data)
                 setProductName("")
                 setDescription("")
                 setCategory("")
@@ -73,6 +72,7 @@ const Page = () => {
                 setPrice(0)
                 setCategory("")
                 setStock(0)
+                setImages(null)
                 alert("Product is created")
             })
             .catch(err => {

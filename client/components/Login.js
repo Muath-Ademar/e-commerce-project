@@ -28,7 +28,6 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
             // get user role 
             const roleRes = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, { withCredentials: true })
             const userRole = roleRes.data.user.role
-            console.log(userRole)
 
             // Now sync cart only after login success
             const localCart = JSON.parse(localStorage.getItem('ITEM'));
@@ -45,7 +44,6 @@ const Login = ({ onLoginSuccess, showLogin, setShowLogin }) => {
                         { items },
                         { withCredentials: true }
                     );
-                    console.log("🛒 Cart synced to backend:", cartRes.data);
                     localStorage.removeItem('ITEM');
                     window.dispatchEvent(new Event('cart-updated'));
                 } catch (cartErr) {

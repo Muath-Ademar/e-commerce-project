@@ -20,7 +20,6 @@ function ProductsContent ({searchQuery}) {
         const endpoint = searchQuery ? `products/search?key=${searchQuery}` : 'products'
         axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/${endpoint}`)
             .then(res => {
-                console.log(res.data)
                 if (Array.isArray(res.data)) {
 
                     const sorted = res.data.sort((a, b) => a.productName.localeCompare(b.productName))
@@ -43,12 +42,10 @@ function ProductsContent ({searchQuery}) {
 
         axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/products/filter`, { params: { category, colors, sizes, minPrice, maxPrice } })
             .then(res => {
-                console.log(res.data)
                 setFilteredProducts(res.data)
             })
             .catch((err) => {
                 if (err.response && err.response.data) {
-                    console.log(err.response.data);
                     const errorsObject = err.response.data.errors;
                     const errorMessages = {};
 

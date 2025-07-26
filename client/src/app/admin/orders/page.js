@@ -19,7 +19,6 @@ const Page = () => {
           router.push('/')
         }
       } catch (error) {
-        console.log('error', error)
         router.push('/')
       }
     }
@@ -31,7 +30,6 @@ const Page = () => {
   const changeDeliveryStatus = async (orderId, newStatus) => {
     try {
       const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE}/api/orders/${orderId}/admin/update`, { deliveryStatus: newStatus }, { withCredentials: true })
-      console.log(res.data)
       setOrders(orders.map(order =>
         order._id === orderId ?{
           ...order,
@@ -51,7 +49,6 @@ const Page = () => {
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/orders`, { withCredentials: true })
       .then((res => {
-        console.log(res.data)
         setOrders(res.data)
       }))
       .catch((err => console.log(err)))

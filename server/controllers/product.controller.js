@@ -34,7 +34,6 @@ module.exports.createProduct = async (req, res) => {
 module.exports.getAllProducts = (req, res) => {
     Product.find({})
         .then(products => {
-            console.log(products)
             res.json(products)
         })
         .catch(err => res.json(err))
@@ -67,7 +66,6 @@ module.exports.filterProduct = async (req, res) => {
         if (colors) {
             let colorsArray = colors.split(",").map(c => c.charAt(0).toUpperCase() + c.slice(1).toLowerCase().trim())
             query.colors = { $in: colorsArray }
-            console.log(colorsArray)
         }
         if (sizes) {
             let sizesArray = sizes.split(",").map(s => s.trim())

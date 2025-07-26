@@ -134,7 +134,6 @@ module.exports.getUserCart = async (req, res) => {
             path: 'items.productId',
             select: 'productName price images'
         });
-        console.log("Populated cart data:", JSON.stringify(cart.items, null, 2)); // 🔥 log to inspect structure
         if (!cart) return res.status(404).json({ msg: "Cart cannot be found" })
 
         const formattedItems = cart.items.map(item => {

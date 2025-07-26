@@ -19,7 +19,6 @@ const Page = () => {
           router.push('/home')
         }
       } catch (error) {
-        console.log('error', error)
         router.push('/home')
       }
     }
@@ -31,7 +30,6 @@ const Page = () => {
 
     axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/messages`, { withCredentials: true })
       .then(res => {
-        console.log(res.data)
         setMessages(res.data)
       })
       .catch(err => console.log(err))

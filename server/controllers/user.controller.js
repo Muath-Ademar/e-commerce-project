@@ -49,7 +49,6 @@ module.exports.login = async(req, res) =>{
         secure: true,
     })
     .json({msg: "success!"});
-    console.log("Set-Cookie", userToken);
 }
 
 module.exports.getAllUsers = (req, res) =>{

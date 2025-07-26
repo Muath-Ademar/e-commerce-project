@@ -18,7 +18,6 @@ const Page = () => {
   const handleDelete = (id) => {
     axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/api/products/${id}`, {withCredentials: true})
     .then(res =>{
-      console.log(res.data)
       setProducts(prev => prev.filter(product => product.id !== id))
     })
     .catch(err=> console.log(err))

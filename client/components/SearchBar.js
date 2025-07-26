@@ -22,7 +22,6 @@ const SearchBar = ({initialQuery=''}) => {
     }
     axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/products/search?key=${encodeURIComponent(query)}`)
       .then(res => {
-        console.log(res.data)
         setSearchedProducts(res.data)
         setIsOpen(true)
       })

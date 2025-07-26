@@ -26,7 +26,6 @@ const Page = () => {
                     router.push('/home')
                 }
             } catch (error) {
-                console.log('error', error)
                 router.push('/home')
             }
         }

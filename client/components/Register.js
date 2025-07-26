@@ -44,7 +44,6 @@ const Register = ({ onClose, onRegisterSuccess, showLogin, setShowLogin }) => {
                     },
                         { withCredentials: true }
                     );
-                    console.log("🛒 Cart synced to backend:", cartRes.data);
                     localStorage.removeItem('ITEM')
                     window.dispatchEvent(new Event('cart-updated'))
                 } catch (cartErr) {
@@ -55,7 +54,6 @@ const Register = ({ onClose, onRegisterSuccess, showLogin, setShowLogin }) => {
             if (err.response && err.response.data) {
                 if(err.response.data.errors){
 
-                    console.log(err.response.data);
                     const errorsObject = err.response.data.errors;
                     const errorMessages = {};
                     

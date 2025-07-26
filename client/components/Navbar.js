@@ -200,7 +200,8 @@ const Navbar = () => {
                     return;
                 }
                 const deleteRes = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/api/cart/remove/${id}`, { withCredentials: true });
-                console.log('Delete response:', deleteRes.status);
+
+                
             } catch (error) {
                 console.error('Failed to delete from server:', error);
                 return; // Optional: stop here if you want to avoid showing incorrect UI

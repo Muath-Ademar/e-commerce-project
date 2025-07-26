@@ -21,6 +21,7 @@ const Page = () => {
     setEmail('')
     setSubject('')
     setMessage('')
+    alert('Message has been sent')
 
   }
 

@@ -10,7 +10,6 @@ const Page = () => {
   const deleteOrder = (orderId) => {
     axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/api/orders/delete/${orderId}`, { withCredentials: true })
       .then(res => {
-        console.log(res.data)
         setOrders(orders.filter(order => order._id != orderId))
       })
       .catch(error => console.log(error))

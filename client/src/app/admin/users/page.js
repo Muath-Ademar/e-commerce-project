@@ -32,7 +32,6 @@ const Page = () => {
   useEffect(()=>{     
       axios.get('http://localhost:8000/api/users', {withCredentials: true})
       .then(res =>{
-        console.log(res.data)
         const regularUsers = res.data.filter(user=> user.role != 'admin')
         setUsers(regularUsers)
       })
@@ -43,7 +42,6 @@ const Page = () => {
   const deleteUser = (id) =>{
       axios.delete(`http://localhost:8000/api/user/delete/${id}`, {withCredentials: true})
       .then(res=>{
-        console.log(res.data)
         setUsers(users.filter(user=> user._id !== id))
       })
       .catch(err => console.log(err))

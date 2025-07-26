@@ -17,7 +17,6 @@ const Page = () => {
     axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/products/${id}`)
       .then(res => {
         setProduct(res.data)
-        console.log(res.data)
       })
       .catch(err => console.error(err))
   }, [id])
@@ -42,7 +41,6 @@ const Page = () => {
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth`, { withCredentials: true });
             const user = res.data.user;
-            console.log(user.id)
 
             if (user) {
                 const payload = {
@@ -59,7 +57,6 @@ const Page = () => {
 
                 const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE}/api/cart/add`, payload, { withCredentials: true });
                 setCart(response.data)
-                console.log('Cart response:', response.data);
             } else {
                 throw new Error('User not authenticated');
             }
