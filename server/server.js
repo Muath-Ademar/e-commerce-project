@@ -7,7 +7,10 @@ const app = express()
 require('dotenv').config();
 const port = process.env.PORT
 require('./config/mongoose.config');
-app.use(cors({credentials: true, origin: 'https://e-commerce-project-rouge-sigma.vercel.app'}));
+app.use(cors({
+    origin: 'https://e-commerce-project-rouge-sigma.vercel.app',
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())

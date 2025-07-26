@@ -17,8 +17,7 @@ module.exports.register = async(req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "None", 
-        secure: process.env.NODE_ENV === "production",
-        domain: 'https://back-end-rork.onrender.com'
+        secure: true,
     })
     res.json({msg: "success!", user: newUser})
     } catch (err){
@@ -47,10 +46,10 @@ module.exports.login = async(req, res) =>{
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "None", 
-        secure: process.env.NODE_ENV === "production" ,
-        domain: 'back-end-rork.onrender.com'
+        secure: true,
     })
     .json({msg: "success!"});
+    console.log("Set-Cookie", userToken);
 }
 
 module.exports.getAllUsers = (req, res) =>{
