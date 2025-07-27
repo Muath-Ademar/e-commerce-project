@@ -72,7 +72,7 @@ const List = ({ products }) => {
                     p._id === product._id ? { ...p, quantity: p.quantity + quantity } : p
                 );
             } else {
-                updatedCart = [...productsInCart, { ...product, quantity, color, size }];
+                updatedCart = [...productsInCart, { ...product, quantity }];
             }
 
             localStorage.setItem('ITEM', JSON.stringify(updatedCart));
