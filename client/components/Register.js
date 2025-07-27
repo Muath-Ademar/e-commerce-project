@@ -34,7 +34,9 @@ const Register = ({ onClose, onRegisterSuccess, showLogin, setShowLogin }) => {
             if (localCart && Array.isArray(localCart) && localCart.length > 0) {
                 const items = localCart.map(item => ({
                     productId: item._id,
-                    quantity: item.quantity
+                    quantity: item.quantity,
+                    size: item.size,
+                    color: item.color
                 }))
 
                 try {
