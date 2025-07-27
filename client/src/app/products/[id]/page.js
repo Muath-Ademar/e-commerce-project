@@ -74,7 +74,7 @@ const Page = () => {
                     p._id === product._id ? { ...p, quantity: p.quantity + quantity } : p
                 );
             } else {
-                updatedCart = [...productsInCart, { ...product, quantity }];
+                updatedCart = [...productsInCart, { ...product, quantity, size, color }];
             }
 
             localStorage.setItem('ITEM', JSON.stringify(updatedCart));

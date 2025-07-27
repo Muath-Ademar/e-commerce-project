@@ -119,7 +119,6 @@ const Navbar = () => {
                         color: item.color //make sure to double check this, if there is an error it could be from here
                     }))
                     : [];
-                console.log(items)
 
                 setProductsInCart(items);
             } catch (error) {

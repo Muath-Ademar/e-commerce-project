@@ -102,7 +102,7 @@ function ProductsContent ({searchQuery}) {
                             className="w-full px-4 py-3 text-sm border-0 bg-gray-50 rounded-xl focus:ring-2 focus:ring-orange-200 focus:bg-white transition-all"
                             placeholder="Any"
                             value={colors}
-                            onChange={e => setColors(e.target.value)}
+                            onChange={e => setColors(e.target.value.charAt(0).toUpperCase() + value.slice(1))}
                         />
                     </div>
 
@@ -114,7 +114,7 @@ function ProductsContent ({searchQuery}) {
                             className="w-full px-4 py-3 text-sm border-0 bg-gray-50 rounded-xl focus:ring-2 focus:ring-orange-200 focus:bg-white transition-all"
                             placeholder="Any"
                             value={sizes}
-                            onChange={e => setSizes(e.target.value)}
+                            onChange={e => setSizes(e.target.value.toUpperCase())}
                         />
                     </div>
 
