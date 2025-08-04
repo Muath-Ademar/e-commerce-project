@@ -13,7 +13,7 @@ const Page = () => {
     useEffect(() => {
     const getUserRole = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, { withCredentials: true })
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/users`, { withCredentials: true })
         const userRole = res.data.user.role
         setRole(userRole)
         if (userRole !== 'admin') {
@@ -30,10 +30,10 @@ const Page = () => {
   
   
   useEffect(()=>{     
-      axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, {withCredentials: true})
+      axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/users`, {withCredentials: true})
       .then(res =>{
-        console.log("---->" + " " + res.data )
-        const regularUsers = res.data.users.filter(user=> user.role != 'admin')
+        console.log("---->", res.data )
+        const regularUsers = res.data.filter(user=> user.role != 'admin')
         setUsers(regularUsers)
       })
       .catch(err=> console.log(err))
