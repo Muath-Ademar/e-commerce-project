@@ -13,15 +13,15 @@ const Page = () => {
     useEffect(() => {
     const getUserRole = async () => {
       try {
-        const res = await axios.get('http://localhost:8000/api/user', { withCredentials: true })
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, { withCredentials: true })
         const userRole = res.data.user.role
         setRole(userRole)
         if (userRole !== 'admin') {
-          router.push('/home')
+          router.push('/')
         }
       } catch (error) {
         console.log('error', error)
-        router.push('/home')
+        router.push('/')
       }
     }
     getUserRole()
@@ -30,7 +30,7 @@ const Page = () => {
   
   
   useEffect(()=>{     
-      axios.get('http://localhost:8000/api/users', {withCredentials: true})
+      axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, {withCredentials: true})
       .then(res =>{
         const regularUsers = res.data.filter(user=> user.role != 'admin')
         setUsers(regularUsers)
@@ -40,7 +40,7 @@ const Page = () => {
 
   
   const deleteUser = (id) =>{
-      axios.delete(`http://localhost:8000/api/user/delete/${id}`, {withCredentials: true})
+      axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/api/user/delete/${id}`, {withCredentials: true})
       .then(res=>{
         setUsers(users.filter(user=> user._id !== id))
       })
