@@ -32,7 +32,6 @@ const Page = () => {
   useEffect(()=>{     
       axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/api/users`, {withCredentials: true})
       .then(res =>{
-        console.log("---->", res.data )
         const regularUsers = res.data.filter(user=> user.role != 'admin')
         setUsers(regularUsers)
       })
