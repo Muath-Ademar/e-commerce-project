@@ -26,5 +26,5 @@ Experience the live application here:
 
 ## 🖼️ Screenshots
 
-| ![Screenshot 1](https://via.placeholder.com/300x200.png?text=Screenshot+1) | ![Screenshot 2](https://via.placeholder.com/300x200.png?text=Screenshot+2) | ![Screenshot 3](https://via.placeholder.com/300x200.png?text=Screenshot+3) |
+| ![Screenshot 1](screenshots/screenshot1.png) | ![Screenshot 2](screenshots/screenshot2.png) | ![Screenshot 3](screenshots/screenshot3.png) |
 |:---:|:---:|:---:|
