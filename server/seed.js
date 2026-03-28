@@ -18,7 +18,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['White', 'Black', 'Gray'],
         price: 24.99,
-        images: [u('1521572163474-6864f9cf17ab'), u('1583743814966-8d20eb5a2258')],
+        images: [u('1521572163474-6864f9cf17ab')],
         stock: 100,
     },
     {
@@ -28,7 +28,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL', 'XXL'],
         colors: ['Blue', 'Black', 'Red'],
         price: 34.99,
-        images: [u('1583743814966-8d20eb5a2258'), u('1521572163474-6864f9cf17ab')],
+        images: [u('1521572163474-6864f9cf17ab')],
         stock: 80,
     },
     {
@@ -38,7 +38,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Gray', 'Navy', 'Black'],
         price: 59.99,
-        images: [u('1556821840-3a63f15732ce'), u('1578768079052-aa76e52ff9ea')],
+        images: [u('1556821840-3a63f15732ce')],
         stock: 60,
     },
     {
@@ -48,7 +48,7 @@ const products = [
         sizes: ['M', 'L', 'XL'],
         colors: ['Black', 'Olive'],
         price: 64.99,
-        images: [u('1578768079052-aa76e52ff9ea'), u('1556821840-3a63f15732ce')],
+        images: [u('1556821840-3a63f15732ce')],
         stock: 45,
     },
     {
@@ -58,7 +58,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Black', 'Navy', 'Red'],
         price: 29.99,
-        images: [u('1591195853828-11db59a44f43'), u('1544899282-b0fb6f3bbedb')],
+        images: [u('1591195853828-11db59a44f43')],
         stock: 90,
     },
     {
@@ -68,7 +68,7 @@ const products = [
         sizes: ['S', 'M', 'L'],
         colors: ['Gray', 'Black'],
         price: 27.99,
-        images: [u('1544899282-b0fb6f3bbedb'), u('1591195853828-11db59a44f43')],
+        images: [u('1591195853828-11db59a44f43')],
         stock: 70,
     },
     {
@@ -78,7 +78,7 @@ const products = [
         sizes: ['40', '41', '42', '43', '44', '45'],
         colors: ['White', 'Black', 'Blue'],
         price: 89.99,
-        images: [u('1542291026-7eec264c27ff'), u('1460353581641-37dfd0a4232c')],
+        images: [u('1542291026-7eec264c27ff')],
         stock: 50,
     },
     {
@@ -88,7 +88,7 @@ const products = [
         sizes: ['40', '41', '42', '43', '44'],
         colors: ['Black', 'Gray'],
         price: 79.99,
-        images: [u('1460353581641-37dfd0a4232c'), u('1542291026-7eec264c27ff')],
+        images: [u('1542291026-7eec264c27ff')],
         stock: 40,
     },
     {
@@ -98,7 +98,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Black', 'Navy', 'Burgundy'],
         price: 99.99,
-        images: [u('1588117305388-c649dd6a8fb0'), u('1571731956672-f2b94d7dd0cb')],
+        images: [u('1588117305388-c649dd6a8fb0')],
         stock: 35,
     },
     {
@@ -108,7 +108,7 @@ const products = [
         sizes: ['M', 'L', 'XL'],
         colors: ['Gray', 'Black'],
         price: 109.99,
-        images: [u('1571731956672-f2b94d7dd0cb'), u('1588117305388-c649dd6a8fb0')],
+        images: [u('1588117305388-c649dd6a8fb0')],
         stock: 30,
     },
     {
@@ -118,7 +118,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Black', 'Orange', 'Blue'],
         price: 74.99,
-        images: [u('1591047139829-d91aecb6caea'), u('1542665952-14bb7f667ded')],
+        images: [u('1591047139829-d91aecb6caea')],
         stock: 40,
     },
     {
@@ -128,7 +128,7 @@ const products = [
         sizes: ['M', 'L', 'XL', 'XXL'],
         colors: ['Black', 'Olive'],
         price: 119.99,
-        images: [u('1542665952-14bb7f667ded'), u('1591047139829-d91aecb6caea')],
+        images: [u('1591047139829-d91aecb6caea')],
         stock: 25,
     },
     {
@@ -138,7 +138,7 @@ const products = [
         sizes: ['XS', 'S', 'M', 'L'],
         colors: ['Black', 'Pink', 'White'],
         price: 39.99,
-        images: [u('1518611012118-696072aa579a'), u('1571781926291-522cf7e9f748')],
+        images: [u('1518611012118-696072aa579a')],
         stock: 60,
     },
     {
@@ -148,7 +148,7 @@ const products = [
         sizes: ['XS', 'S', 'M', 'L'],
         colors: ['Gray', 'Teal', 'Black'],
         price: 34.99,
-        images: [u('1571781926291-522cf7e9f748'), u('1518611012118-696072aa579a')],
+        images: [u('1518611012118-696072aa579a')],
         stock: 55,
     },
     {
@@ -158,7 +158,7 @@ const products = [
         sizes: ['XS', 'S', 'M', 'L', 'XL'],
         colors: ['Black', 'Navy', 'Charcoal'],
         price: 49.99,
-        images: [u('1506629082955-511b1aa562c8'), u('1565084888297-b8823bc1d888')],
+        images: [u('1506629082955-511b1aa562c8')],
         stock: 75,
     },
     {
@@ -168,7 +168,7 @@ const products = [
         sizes: ['XS', 'S', 'M', 'L'],
         colors: ['Multicolor'],
         price: 54.99,
-        images: [u('1565084888297-b8823bc1d888'), u('1506629082955-511b1aa562c8')],
+        images: [u('1506629082955-511b1aa562c8')],
         stock: 50,
     },
     {
@@ -178,7 +178,7 @@ const products = [
         sizes: ['S', 'M', 'L'],
         colors: ['White', 'Black', 'Gray'],
         price: 14.99,
-        images: [u('1586350977771-b3b0abd50c82'), u('1523311916736-b34e3f52e350')],
+        images: [u('1586350977771-b3b0abd50c82')],
         stock: 150,
     },
     {
@@ -188,7 +188,7 @@ const products = [
         sizes: ['M', 'L'],
         colors: ['Black', 'White'],
         price: 19.99,
-        images: [u('1523311916736-b34e3f52e350'), u('1586350977771-b3b0abd50c82')],
+        images: [u('1586350977771-b3b0abd50c82')],
         stock: 120,
     },
     {
@@ -198,7 +198,7 @@ const products = [
         sizes: ['One Size'],
         colors: ['Black', 'Navy'],
         price: 44.99,
-        images: [u('1593069567131-0cd4b0d78f8c'), u('1553062407-98eeb64c6a62')],
+        images: [u('1593069567131-0cd4b0d78f8c')],
         stock: 30,
     },
     {
@@ -208,7 +208,7 @@ const products = [
         sizes: ['One Size'],
         colors: ['Multicolor'],
         price: 24.99,
-        images: [u('1571019614242-c5c5dee9f50b'), u('1598289431512-b97b0917affc')],
+        images: [u('1571019614242-c5c5dee9f50b')],
         stock: 80,
     },
 ];
