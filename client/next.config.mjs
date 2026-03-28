@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['back-end-rork.onrender.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -9,6 +8,9 @@ const nextConfig = {
         pathname: '/uploads/**',
       },
     ],
+  },
+  turbopack: {
+    root: import.meta.dirname,
   },
 };
 
