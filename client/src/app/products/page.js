@@ -45,18 +45,7 @@ function ProductsContent ({searchQuery}) {
                 setFilteredProducts(res.data)
             })
             .catch((err) => {
-                if (err.response && err.response.data) {
-                    const errorsObject = err.response.data.errors;
-                    const errorMessages = {};
-
-                    for (let key of Object.keys(errorsObject)) {
-                        errorMessages[key] = errorsObject[key].message;
-                    }
-
-                    setErrors(errorMessages); // or whatever you're doing with them
-                } else {
-                    console.error("Unexpected error:", err);
-                }
+                console.error("Filter error:", err);
             })
     }
 

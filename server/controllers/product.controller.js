@@ -62,7 +62,7 @@ module.exports.filterProduct = async (req, res) => {
     try {
         let query = {}
         if (category) query.category = category.trim()
-        if (minPrice && maxPrice) query.price = { $gte: minPrice, $lte: maxPrice }
+        if (minPrice !== undefined && maxPrice !== undefined) query.price = { $gte: Number(minPrice), $lte: Number(maxPrice) }
         if (colors) {
             let colorsArray = colors.split(",").map(c => c.charAt(0).toUpperCase() + c.slice(1).toLowerCase().trim())
             query.colors = { $in: colorsArray }

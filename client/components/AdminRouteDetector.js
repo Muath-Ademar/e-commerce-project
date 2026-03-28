@@ -9,9 +9,9 @@ export default function AdminRouteDetector({children}) {
   const isAdmin = pathname?.startsWith('/admin');
   return(
     <>
-      {!isAdmin ?  <Navbar />: ""}
+      {!isAdmin ? <Navbar /> : null}
         {children}
-      {!isAdmin ? <Footer/>: ''}
+      {!isAdmin ? <Footer /> : null}
     </>
     )
 
