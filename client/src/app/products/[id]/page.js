@@ -100,7 +100,7 @@ const Page = () => {
             {product.images.map((img, index) => (
               <Image
                 key={index}
-                src={`${process.env.NEXT_PUBLIC_API_BASE}/${img}`}
+                src={img.startsWith('http') ? img : `${process.env.NEXT_PUBLIC_API_BASE}/${img}`}
                 alt={`Thumbnail ${index + 1}`}
                 width={80}
                 height={80}
@@ -114,7 +114,7 @@ const Page = () => {
           {/* Main Image */}
           <div className="flex-1 mt-6 md:mt-0 relative overflow-hidden rounded-lg shadow-md">
             <Image
-              src={`${process.env.NEXT_PUBLIC_API_BASE}/${product.images[selectedImage]}`}
+              src={product.images[selectedImage].startsWith('http') ? product.images[selectedImage] : `${process.env.NEXT_PUBLIC_API_BASE}/${product.images[selectedImage]}`}
               alt={`Product Image ${selectedImage + 1}`}
               width={800}
               height={600}

@@ -16,7 +16,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['White', 'Black', 'Gray'],
         price: 24.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/tee1/800/600', 'https://picsum.photos/seed/tee1b/800/600'],
         stock: 100,
     },
     {
@@ -26,7 +26,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL', 'XXL'],
         colors: ['Blue', 'Black', 'Red'],
         price: 34.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/tee2/800/600', 'https://picsum.photos/seed/tee2b/800/600'],
         stock: 80,
     },
     {
@@ -36,7 +36,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Gray', 'Navy', 'Black'],
         price: 59.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/hoodie1/800/600', 'https://picsum.photos/seed/hoodie1b/800/600'],
         stock: 60,
     },
     {
@@ -46,7 +46,7 @@ const products = [
         sizes: ['M', 'L', 'XL'],
         colors: ['Black', 'Olive'],
         price: 64.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/hoodie2/800/600', 'https://picsum.photos/seed/hoodie2b/800/600'],
         stock: 45,
     },
     {
@@ -56,7 +56,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Black', 'Navy', 'Red'],
         price: 29.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/shorts1/800/600', 'https://picsum.photos/seed/shorts1b/800/600'],
         stock: 90,
     },
     {
@@ -66,7 +66,7 @@ const products = [
         sizes: ['S', 'M', 'L'],
         colors: ['Gray', 'Black'],
         price: 27.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/shorts2/800/600', 'https://picsum.photos/seed/shorts2b/800/600'],
         stock: 70,
     },
     {
@@ -76,7 +76,7 @@ const products = [
         sizes: ['40', '41', '42', '43', '44', '45'],
         colors: ['White', 'Black', 'Blue'],
         price: 89.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/shoes1/800/600', 'https://picsum.photos/seed/shoes1b/800/600'],
         stock: 50,
     },
     {
@@ -86,7 +86,7 @@ const products = [
         sizes: ['40', '41', '42', '43', '44'],
         colors: ['Black', 'Gray'],
         price: 79.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/shoes2/800/600', 'https://picsum.photos/seed/shoes2b/800/600'],
         stock: 40,
     },
     {
@@ -96,7 +96,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Black', 'Navy', 'Burgundy'],
         price: 99.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/track1/800/600', 'https://picsum.photos/seed/track1b/800/600'],
         stock: 35,
     },
     {
@@ -106,7 +106,7 @@ const products = [
         sizes: ['M', 'L', 'XL'],
         colors: ['Gray', 'Black'],
         price: 109.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/track2/800/600', 'https://picsum.photos/seed/track2b/800/600'],
         stock: 30,
     },
     {
@@ -116,7 +116,7 @@ const products = [
         sizes: ['S', 'M', 'L', 'XL'],
         colors: ['Black', 'Orange', 'Blue'],
         price: 74.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/jacket1/800/600', 'https://picsum.photos/seed/jacket1b/800/600'],
         stock: 40,
     },
     {
@@ -126,7 +126,7 @@ const products = [
         sizes: ['M', 'L', 'XL', 'XXL'],
         colors: ['Black', 'Olive'],
         price: 119.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/jacket2/800/600', 'https://picsum.photos/seed/jacket2b/800/600'],
         stock: 25,
     },
     {
@@ -136,7 +136,7 @@ const products = [
         sizes: ['XS', 'S', 'M', 'L'],
         colors: ['Black', 'Pink', 'White'],
         price: 39.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/bra1/800/600', 'https://picsum.photos/seed/bra1b/800/600'],
         stock: 60,
     },
     {
@@ -146,7 +146,7 @@ const products = [
         sizes: ['XS', 'S', 'M', 'L'],
         colors: ['Gray', 'Teal', 'Black'],
         price: 34.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/bra2/800/600', 'https://picsum.photos/seed/bra2b/800/600'],
         stock: 55,
     },
     {
@@ -156,7 +156,7 @@ const products = [
         sizes: ['XS', 'S', 'M', 'L', 'XL'],
         colors: ['Black', 'Navy', 'Charcoal'],
         price: 49.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/leggings1/800/600', 'https://picsum.photos/seed/leggings1b/800/600'],
         stock: 75,
     },
     {
@@ -166,7 +166,7 @@ const products = [
         sizes: ['XS', 'S', 'M', 'L'],
         colors: ['Multicolor'],
         price: 54.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/leggings2/800/600', 'https://picsum.photos/seed/leggings2b/800/600'],
         stock: 50,
     },
     {
@@ -176,7 +176,7 @@ const products = [
         sizes: ['S', 'M', 'L'],
         colors: ['White', 'Black', 'Gray'],
         price: 14.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/socks1/800/600', 'https://picsum.photos/seed/socks1b/800/600'],
         stock: 150,
     },
     {
@@ -186,7 +186,7 @@ const products = [
         sizes: ['M', 'L'],
         colors: ['Black', 'White'],
         price: 19.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/socks2/800/600', 'https://picsum.photos/seed/socks2b/800/600'],
         stock: 120,
     },
     {
@@ -196,7 +196,7 @@ const products = [
         sizes: ['One Size'],
         colors: ['Black', 'Navy'],
         price: 44.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/bag1/800/600', 'https://picsum.photos/seed/bag1b/800/600'],
         stock: 30,
     },
     {
@@ -206,7 +206,7 @@ const products = [
         sizes: ['One Size'],
         colors: ['Multicolor'],
         price: 24.99,
-        images: ['uploads/placeholder.jpg'],
+        images: ['https://picsum.photos/seed/bands1/800/600', 'https://picsum.photos/seed/bands1b/800/600'],
         stock: 80,
     },
 ];

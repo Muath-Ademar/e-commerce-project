@@ -96,7 +96,7 @@ const List = ({ products }) => {
                     {/* Product Image */}
                     <div className="relative overflow-hidden">
                         <Image
-                            src={`${process.env.NEXT_PUBLIC_API_BASE}/${product.images[0]}`}
+                            src={product.images[0].startsWith('http') ? product.images[0] : `${process.env.NEXT_PUBLIC_API_BASE}/${product.images[0]}`}
                             alt={product.productName}
                             width={400}
                             height={400}

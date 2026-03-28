@@ -7,6 +7,10 @@ const nextConfig = {
         hostname: 'back-end-rork.onrender.com',
         pathname: '/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
     ],
   },
   turbopack: {
