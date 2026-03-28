@@ -36,7 +36,7 @@ module.exports.getAllProducts = (req, res) => {
         .then(products => {
             res.json(products)
         })
-        .catch(err => res.json(err))
+        .catch(err => res.status(500).json({ msg: "Error fetching products", error: err.message }))
 }
 
 module.exports.getSpecificProduct = (req, res) => {
